@@ -15,6 +15,8 @@
 		05E5DAE82D3148720037F9A8 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAE72D3148720037F9A8 /* APIManager.swift */; };
 		05E5DAEB2D314CBF0037F9A8 /* LoginResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAEA2D314CBF0037F9A8 /* LoginResponseData.swift */; };
 		05E5DAED2D314E670037F9A8 /* APIResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAEC2D314E670037F9A8 /* APIResponseData.swift */; };
+		05E5DAF02D3151B40037F9A8 /* LoginInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAEF2D3151B40037F9A8 /* LoginInputView.swift */; };
+		05E5DAF22D3159580037F9A8 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAF12D3159580037F9A8 /* LoginManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		05E5DAE72D3148720037F9A8 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		05E5DAEA2D314CBF0037F9A8 /* LoginResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseData.swift; sourceTree = "<group>"; };
 		05E5DAEC2D314E670037F9A8 /* APIResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseData.swift; sourceTree = "<group>"; };
+		05E5DAEF2D3151B40037F9A8 /* LoginInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInputView.swift; sourceTree = "<group>"; };
+		05E5DAF12D3159580037F9A8 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,8 @@
 		05E5DADE2D30CBD90037F9A8 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				05E5DAEE2D3151760037F9A8 /* Subviews */,
+				05E5DAF12D3159580037F9A8 /* LoginManager.swift */,
 				05E5DADF2D30CBE50037F9A8 /* LoginViewController.swift */,
 			);
 			path = Login;
@@ -111,6 +117,14 @@
 				05E5DAEA2D314CBF0037F9A8 /* LoginResponseData.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		05E5DAEE2D3151760037F9A8 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				05E5DAEF2D3151B40037F9A8 /* LoginInputView.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,6 +200,8 @@
 				05E5DAED2D314E670037F9A8 /* APIResponseData.swift in Sources */,
 				05E5DACA2D30C7B00037F9A8 /* AppDelegate.swift in Sources */,
 				05E5DAE52D30D28F0037F9A8 /* ConstUrls.swift in Sources */,
+				05E5DAF02D3151B40037F9A8 /* LoginInputView.swift in Sources */,
+				05E5DAF22D3159580037F9A8 /* LoginManager.swift in Sources */,
 				05E5DAEB2D314CBF0037F9A8 /* LoginResponseData.swift in Sources */,
 				05E5DAE02D30CBE50037F9A8 /* LoginViewController.swift in Sources */,
 				05E5DACC2D30C7B00037F9A8 /* SceneDelegate.swift in Sources */,
