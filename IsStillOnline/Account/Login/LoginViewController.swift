@@ -56,46 +56,9 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController {
     @objc func loginAction() {
-        print("✅ Tapped")
-        guard let url = URL(string: LOGIN_URL) else {
-            print("✅ Invalid url")
-            return
+        Task {
+            let manager = APIManager()
+            try? await manager.loginWith(email: "hongyan@zephyrhuang.com", password: "123456")
         }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let parameters: [String: Any] = [
-            "email": "hongyan@zephyrhuang.com",
-            "password": "123456"
-        ]
-
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
-        } catch {
-            print("✅ Request error: \(error.localizedDescription)")
-            return
-        }
-
-        let session = URLSession.shared
-        let task = session.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("請求失敗: \(error)")
-                return
-            }
-            if let httpResponse = response as? HTTPURLResponse {
-                print("HTTP 狀態碼: \(httpResponse.statusCode)")
-            }
-            if let data = data {
-                do {
-                    let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [])
-                    print("回應資料: \(jsonResponse)")
-                } catch {
-                    print("無法解析回應: \(error)")
-                }
-            }
-        }
-        task.resume()
     }
 }

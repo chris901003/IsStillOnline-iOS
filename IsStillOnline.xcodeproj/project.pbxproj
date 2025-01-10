@@ -12,6 +12,9 @@
 		05E5DAD32D30C7B10037F9A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05E5DAD22D30C7B10037F9A8 /* Assets.xcassets */; };
 		05E5DAE02D30CBE50037F9A8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DADF2D30CBE50037F9A8 /* LoginViewController.swift */; };
 		05E5DAE52D30D28F0037F9A8 /* ConstUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAE42D30D28F0037F9A8 /* ConstUrls.swift */; };
+		05E5DAE82D3148720037F9A8 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAE72D3148720037F9A8 /* APIManager.swift */; };
+		05E5DAEB2D314CBF0037F9A8 /* LoginResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAEA2D314CBF0037F9A8 /* LoginResponseData.swift */; };
+		05E5DAED2D314E670037F9A8 /* APIResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAEC2D314E670037F9A8 /* APIResponseData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		05E5DAD72D30C7B10037F9A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05E5DADF2D30CBE50037F9A8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		05E5DAE42D30D28F0037F9A8 /* ConstUrls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstUrls.swift; sourceTree = "<group>"; };
+		05E5DAE72D3148720037F9A8 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		05E5DAEA2D314CBF0037F9A8 /* LoginResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseData.swift; sourceTree = "<group>"; };
+		05E5DAEC2D314E670037F9A8 /* APIResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,12 +60,13 @@
 		05E5DAC82D30C7B00037F9A8 /* IsStillOnline */ = {
 			isa = PBXGroup;
 			children = (
-				05E5DAE12D30D1230037F9A8 /* Const */,
+				05E5DAE62D3148540037F9A8 /* API */,
 				05E5DADD2D30CBC30037F9A8 /* Account */,
+				05E5DAE12D30D1230037F9A8 /* Const */,
 				05E5DAC92D30C7B00037F9A8 /* AppDelegate.swift */,
-				05E5DACB2D30C7B00037F9A8 /* SceneDelegate.swift */,
 				05E5DAD22D30C7B10037F9A8 /* Assets.xcassets */,
 				05E5DAD72D30C7B10037F9A8 /* Info.plist */,
+				05E5DACB2D30C7B00037F9A8 /* SceneDelegate.swift */,
 			);
 			path = IsStillOnline;
 			sourceTree = "<group>";
@@ -86,6 +93,24 @@
 				05E5DAE42D30D28F0037F9A8 /* ConstUrls.swift */,
 			);
 			path = Const;
+			sourceTree = "<group>";
+		};
+		05E5DAE62D3148540037F9A8 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				05E5DAE92D314CAD0037F9A8 /* Data */,
+				05E5DAE72D3148720037F9A8 /* APIManager.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		05E5DAE92D314CAD0037F9A8 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				05E5DAEC2D314E670037F9A8 /* APIResponseData.swift */,
+				05E5DAEA2D314CBF0037F9A8 /* LoginResponseData.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,10 +182,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05E5DAE02D30CBE50037F9A8 /* LoginViewController.swift in Sources */,
+				05E5DAE82D3148720037F9A8 /* APIManager.swift in Sources */,
+				05E5DAED2D314E670037F9A8 /* APIResponseData.swift in Sources */,
 				05E5DACA2D30C7B00037F9A8 /* AppDelegate.swift in Sources */,
-				05E5DACC2D30C7B00037F9A8 /* SceneDelegate.swift in Sources */,
 				05E5DAE52D30D28F0037F9A8 /* ConstUrls.swift in Sources */,
+				05E5DAEB2D314CBF0037F9A8 /* LoginResponseData.swift in Sources */,
+				05E5DAE02D30CBE50037F9A8 /* LoginViewController.swift in Sources */,
+				05E5DACC2D30C7B00037F9A8 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
