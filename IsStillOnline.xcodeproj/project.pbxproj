@@ -17,6 +17,8 @@
 		05E5DAED2D314E670037F9A8 /* APIResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAEC2D314E670037F9A8 /* APIResponseData.swift */; };
 		05E5DAF02D3151B40037F9A8 /* LoginInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAEF2D3151B40037F9A8 /* LoginInputView.swift */; };
 		05E5DAF22D3159580037F9A8 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAF12D3159580037F9A8 /* LoginManager.swift */; };
+		05E5DAF62D3406310037F9A8 /* TokenResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAF52D3406310037F9A8 /* TokenResponseData.swift */; };
+		05E5DAF82D340BE80037F9A8 /* MonitorUrlsResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAF72D340BE80037F9A8 /* MonitorUrlsResponseData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		05E5DAEC2D314E670037F9A8 /* APIResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseData.swift; sourceTree = "<group>"; };
 		05E5DAEF2D3151B40037F9A8 /* LoginInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInputView.swift; sourceTree = "<group>"; };
 		05E5DAF12D3159580037F9A8 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
+		05E5DAF52D3406310037F9A8 /* TokenResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponseData.swift; sourceTree = "<group>"; };
+		05E5DAF72D340BE80037F9A8 /* MonitorUrlsResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorUrlsResponseData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +119,8 @@
 			children = (
 				05E5DAEC2D314E670037F9A8 /* APIResponseData.swift */,
 				05E5DAEA2D314CBF0037F9A8 /* LoginResponseData.swift */,
+				05E5DAF72D340BE80037F9A8 /* MonitorUrlsResponseData.swift */,
+				05E5DAF52D3406310037F9A8 /* TokenResponseData.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -204,7 +210,9 @@
 				05E5DAF22D3159580037F9A8 /* LoginManager.swift in Sources */,
 				05E5DAEB2D314CBF0037F9A8 /* LoginResponseData.swift in Sources */,
 				05E5DAE02D30CBE50037F9A8 /* LoginViewController.swift in Sources */,
+				05E5DAF82D340BE80037F9A8 /* MonitorUrlsResponseData.swift in Sources */,
 				05E5DACC2D30C7B00037F9A8 /* SceneDelegate.swift in Sources */,
+				05E5DAF62D3406310037F9A8 /* TokenResponseData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
