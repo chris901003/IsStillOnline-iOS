@@ -11,6 +11,17 @@ import Foundation
 class LoginManager {
     var email: String = ""
     var password: String = ""
+
+    func checkEmail() -> String? {
+        guard !email.isEmpty else { return "Email is empty" }
+        guard email.isValidEmail() else { return "Invalid email" }
+        return nil
+    }
+
+    func checkPassword() -> String? {
+        guard password.count >= 6 else { return "Password is too short" }
+        return nil
+    }
 }
 
 // MARK: - LoginInputViewDelegate

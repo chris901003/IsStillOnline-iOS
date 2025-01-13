@@ -59,6 +59,7 @@ class LoginInputView: UIView {
         textView.isSecureTextEntry = config.isPassword
         textView.clearButtonMode = .whileEditing
         textView.delegate = self
+        textView.autocorrectionType = .no
 
         errorMessageView.font = .systemFont(ofSize: 14, weight: .semibold)
         errorMessageView.textColor = .systemPink

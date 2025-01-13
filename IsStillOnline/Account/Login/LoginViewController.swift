@@ -96,18 +96,18 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController {
     @objc func loginAction() {
-        Task {
-            let manager = APIManager()
-            let result = try? await manager.loginWith(email: "hongyan@zephyrhuang.com", password: "123456")
-            let uid = result?.data.uid ?? ""
-            try await manager.createToken(uid: uid)
-            let monitorUrls = try? await manager.getMonitorUrls(uid: uid)
-            print("✅ Monitor urls: \(monitorUrls?.data.urls ?? [])")
+        var isValid = true
+        if let emailErrorMessage = manager.checkEmail() {
+            emailView.updateError(err: emailErrorMessage)
+            isValid = false
         }
-        if manager.email.isEmpty {
-            emailView.updateError(err: "Email is empty")
-            return
+        if let passwordErrorMessage = manager.checkPassword() {
+            passwordView.updateError(err: passwordErrorMessage)
+            isValid = false
         }
+        guard isValid else { return }
+
         emailView.cleanError()
+        passwordView.cleanError()
     }
 }
