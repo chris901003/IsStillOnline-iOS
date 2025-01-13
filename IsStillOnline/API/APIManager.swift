@@ -8,15 +8,17 @@
 
 import Foundation
 
-private extension APIManager {
+extension APIManager {
     enum Links {
-        case login
+        case login, refreshToken
         case createToken, monitorUrls
 
         func getUrl() -> URL {
             switch self {
                 case .login:
                     return URL(string: LOGIN_URL)!
+                case .refreshToken:
+                    return URL(string: REFRESH_TOKEN_URL)!
                 default:
                     return URL(string: BASE_URL)!
             }
@@ -54,6 +56,8 @@ private extension APIManager {
         case jsonSerialization
         case urlSession
         case url
+        case tokenNotFound
+        case tokenExpired
 
         var errorDescription: String? {
             switch self {
@@ -63,28 +67,16 @@ private extension APIManager {
                     return "Url session failed"
                 case .url:
                     return "Invalid url"
+                case .tokenNotFound:
+                    return "Token not found"
+                case .tokenExpired:
+                    return "Token expired"
             }
         }
     }
 }
 
 class APIManager {
-    static var token: String?
-
-    static func sendRequest<T: Codable>(request: URLRequest, dataType: T.Type) async throws -> T {
-        let (data, _) = try await URLSession.shared.data(for: request)
-        let decoder = JSONDecoder()
-        let result = try decoder.decode(dataType, from: data)
-        return result
-    }
-
-    func addAccessToken(request: URLRequest) -> URLRequest {
-        guard let token = APIManager.token else { return request }
-        var request = request
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        return request
-    }
-
     func loginWith(email: String, password: String) async throws -> LoginResponse {
         let url = Links.login.getUrl()
         var request = Methods.post.getRequest(url: url)
@@ -99,13 +91,14 @@ class APIManager {
         }
 
         do {
-            let result = try await APIManager.sendRequest(request: request, dataType: LoginResponse.self)
+            let result = try await sendRequestFlow(request: request, dataType: LoginResponse.self, withToken: false)
             return result
         } catch {
             throw APIError.urlSession
         }
     }
 
+    @discardableResult
     func createToken(uid: String) async throws -> TokenResponse {
         var urlComponents = Links.createToken.getUrlComponent()
         urlComponents.queryItems = [URLQueryItem(name: "uid", value: uid)]
@@ -116,7 +109,7 @@ class APIManager {
 
         let request = Methods.get.getRequest(url: url)
         do {
-            let result = try await APIManager.sendRequest(request: request, dataType: TokenResponse.self)
+            let result = try await sendRequestFlow(request: request, dataType: TokenResponse.self, withToken: false)
             APIManager.token = result.data.token
             return result
         } catch {
@@ -132,10 +125,9 @@ class APIManager {
             throw APIError.url
         }
 
-        var request = Methods.get.getRequest(url: url)
-        request = addAccessToken(request: request)
+        let request = Methods.get.getRequest(url: url)
         do {
-            let result = try await APIManager.sendRequest(request: request, dataType: MonitorResponse.self)
+            let result = try await sendRequestFlow(request: request, dataType: MonitorResponse.self)
             return result
         } catch {
             throw APIError.urlSession

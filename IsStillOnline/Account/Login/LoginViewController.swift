@@ -100,9 +100,9 @@ extension LoginViewController {
             let manager = APIManager()
             let result = try? await manager.loginWith(email: "hongyan@zephyrhuang.com", password: "123456")
             let uid = result?.data.uid ?? ""
-            let token = try? await manager.createToken(uid: uid)
+            try await manager.createToken(uid: uid)
             let monitorUrls = try? await manager.getMonitorUrls(uid: uid)
-            print("✅ Monitor urls: \(monitorUrls?.data.urls)")
+            print("✅ Monitor urls: \(monitorUrls?.data.urls ?? [])")
         }
         if manager.email.isEmpty {
             emailView.updateError(err: "Email is empty")
