@@ -19,10 +19,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        
-        let loginVC = LoginViewController()
-        window?.rootViewController = loginVC
-        window?.makeKeyAndVisible()
+
+        Task {
+            let apiManager = APIManager()
+            if await apiManager.checkToken() {
+                await MainActor.run {
+                    let rootVC = RootViewController()
+                    window?.rootViewController = rootVC
+                    window?.makeKeyAndVisible()
+                }
+            } else {
+                await MainActor.run {
+                    let loginVC = LoginViewController()
+                    window?.rootViewController = loginVC
+                    window?.makeKeyAndVisible()
+                }
+            }
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

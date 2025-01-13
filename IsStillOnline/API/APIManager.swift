@@ -92,6 +92,7 @@ class APIManager {
 
         do {
             let result = try await sendRequestFlow(request: request, dataType: LoginResponse.self, withToken: false)
+            APIManager.uid = result.data.uid
             return result
         } catch {
             throw APIError.urlSession
@@ -99,9 +100,9 @@ class APIManager {
     }
 
     @discardableResult
-    func createToken(uid: String) async throws -> TokenResponse {
+    func createToken() async throws -> TokenResponse {
         var urlComponents = Links.createToken.getUrlComponent()
-        urlComponents.queryItems = [URLQueryItem(name: "uid", value: uid)]
+        urlComponents.queryItems = [URLQueryItem(name: "uid", value: APIManager.uid)]
 
         guard let url = urlComponents.url else {
             throw APIError.url
@@ -117,9 +118,9 @@ class APIManager {
         }
     }
 
-    func getMonitorUrls(uid: String) async throws -> MonitorResponse {
+    func getMonitorUrls() async throws -> MonitorResponse {
         var urlComponents = Links.monitorUrls.getUrlComponent()
-        urlComponents.queryItems = [URLQueryItem(name: "owner", value: uid)]
+        urlComponents.queryItems = [URLQueryItem(name: "owner", value: APIManager.uid)]
 
         guard let url = urlComponents.url else {
             throw APIError.url

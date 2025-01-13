@@ -9,6 +9,8 @@
 import Foundation
 
 class LoginManager {
+    let apiManager = APIManager()
+
     var email: String = ""
     var password: String = ""
 
@@ -21,6 +23,15 @@ class LoginManager {
     func checkPassword() -> String? {
         guard password.count >= 6 else { return "Password is too short" }
         return nil
+    }
+
+    @discardableResult
+    func loginAction() async throws -> LoginResponse {
+        try await apiManager.loginWith(email: email, password: password)
+    }
+
+    func createToken() async throws {
+        try await apiManager.createToken()
     }
 }
 

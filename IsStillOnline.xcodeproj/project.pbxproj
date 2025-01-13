@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		051792DA2D3547820080AC2E /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792D92D3547820080AC2E /* KeychainManager.swift */; };
+		051792DC2D354A7B0080AC2E /* ConstKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792DB2D354A7B0080AC2E /* ConstKeychain.swift */; };
+		051792DF2D354B6A0080AC2E /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792DE2D354B6A0080AC2E /* RootViewController.swift */; };
 		05E5DACA2D30C7B00037F9A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAC92D30C7B00037F9A8 /* AppDelegate.swift */; };
 		05E5DACC2D30C7B00037F9A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DACB2D30C7B00037F9A8 /* SceneDelegate.swift */; };
 		05E5DAD32D30C7B10037F9A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05E5DAD22D30C7B10037F9A8 /* Assets.xcassets */; };
@@ -24,6 +27,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		051792D92D3547820080AC2E /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		051792DB2D354A7B0080AC2E /* ConstKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstKeychain.swift; sourceTree = "<group>"; };
+		051792DE2D354B6A0080AC2E /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		05E5DAC62D30C7B00037F9A8 /* IsStillOnline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IsStillOnline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E5DAC92D30C7B00037F9A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05E5DACB2D30C7B00037F9A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,6 +59,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		051792D82D3547700080AC2E /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				051792D92D3547820080AC2E /* KeychainManager.swift */,
+			);
+			path = Keychain;
+			sourceTree = "<group>";
+		};
+		051792DD2D354B5E0080AC2E /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				051792DE2D354B6A0080AC2E /* RootViewController.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
 		05E5DABD2D30C7B00037F9A8 = {
 			isa = PBXGroup;
 			children = (
@@ -72,10 +94,12 @@
 		05E5DAC82D30C7B00037F9A8 /* IsStillOnline */ = {
 			isa = PBXGroup;
 			children = (
-				05E5DAFB2D34AFF90037F9A8 /* Extension */,
 				05E5DAE62D3148540037F9A8 /* API */,
 				05E5DADD2D30CBC30037F9A8 /* Account */,
 				05E5DAE12D30D1230037F9A8 /* Const */,
+				05E5DAFB2D34AFF90037F9A8 /* Extension */,
+				051792D82D3547700080AC2E /* Keychain */,
+				051792DD2D354B5E0080AC2E /* Root */,
 				05E5DAC92D30C7B00037F9A8 /* AppDelegate.swift */,
 				05E5DAD22D30C7B10037F9A8 /* Assets.xcassets */,
 				05E5DAD72D30C7B10037F9A8 /* Info.plist */,
@@ -105,6 +129,7 @@
 		05E5DAE12D30D1230037F9A8 /* Const */ = {
 			isa = PBXGroup;
 			children = (
+				051792DB2D354A7B0080AC2E /* ConstKeychain.swift */,
 				05E5DAE42D30D28F0037F9A8 /* ConstUrls.swift */,
 			);
 			path = Const;
@@ -220,14 +245,17 @@
 				05E5DAE82D3148720037F9A8 /* APIManager.swift in Sources */,
 				05E5DAED2D314E670037F9A8 /* APIResponseData.swift in Sources */,
 				05E5DACA2D30C7B00037F9A8 /* AppDelegate.swift in Sources */,
+				051792DC2D354A7B0080AC2E /* ConstKeychain.swift in Sources */,
 				05E5DAE52D30D28F0037F9A8 /* ConstUrls.swift in Sources */,
+				051792DA2D3547820080AC2E /* KeychainManager.swift in Sources */,
 				05E5DAF02D3151B40037F9A8 /* LoginInputView.swift in Sources */,
-				05E5DAFD2D34B00E0037F9A8 /* String+Extension.swift in Sources */,
 				05E5DAF22D3159580037F9A8 /* LoginManager.swift in Sources */,
 				05E5DAEB2D314CBF0037F9A8 /* LoginResponseData.swift in Sources */,
 				05E5DAE02D30CBE50037F9A8 /* LoginViewController.swift in Sources */,
 				05E5DAF82D340BE80037F9A8 /* MonitorUrlsResponseData.swift in Sources */,
+				051792DF2D354B6A0080AC2E /* RootViewController.swift in Sources */,
 				05E5DACC2D30C7B00037F9A8 /* SceneDelegate.swift in Sources */,
+				05E5DAFD2D34B00E0037F9A8 /* String+Extension.swift in Sources */,
 				05E5DAF62D3406310037F9A8 /* TokenResponseData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

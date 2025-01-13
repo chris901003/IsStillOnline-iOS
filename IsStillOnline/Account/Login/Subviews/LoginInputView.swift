@@ -13,6 +13,7 @@ struct LoginInputViewConfig {
     let title: String
     let placeholder: String
     let isPassword: Bool
+    let keyboardType: UIKeyboardType
 }
 
 protocol LoginInputViewDelegate: AnyObject {
@@ -60,6 +61,7 @@ class LoginInputView: UIView {
         textView.clearButtonMode = .whileEditing
         textView.delegate = self
         textView.autocorrectionType = .no
+        textView.keyboardType = config.keyboardType
 
         errorMessageView.font = .systemFont(ofSize: 14, weight: .semibold)
         errorMessageView.textColor = .systemPink

@@ -9,7 +9,20 @@
 import Foundation
 
 extension APIManager {
-    static var token: String?
+    static var uid: String? {
+        didSet {
+            if let uid {
+                KeychainManager.saveToKeychain(key: KEYCHAIN_USER_UID, value: uid)
+            }
+        }
+    }
+    static var token: String? {
+        didSet {
+            if let token {
+                KeychainManager.saveToKeychain(key: KEYCHAIN_TOKEN, value: token)
+            }
+        }
+    }
     static let decoder = JSONDecoder()
 
     /**
@@ -33,6 +46,17 @@ extension APIManager {
         }
         let result = try APIManager.decoder.decode(dataType, from: data)
         return result
+    }
+
+    func checkToken() async -> Bool {
+        guard let uid = KeychainManager.getFromKeychain(key: KEYCHAIN_USER_UID),
+              let token = KeychainManager.getFromKeychain(key: KEYCHAIN_TOKEN) else { return false }
+        APIManager.uid = uid
+        APIManager.token = token
+        guard let _ = try? await getMonitorUrls() else {
+            return false
+        }
+        return true
     }
 
     /**

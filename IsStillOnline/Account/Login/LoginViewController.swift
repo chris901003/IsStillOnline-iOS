@@ -15,14 +15,18 @@ class LoginViewController: UIViewController {
     let emailView = LoginInputView(config: .init(
         title: "Email",
         placeholder: "Email Address",
-        isPassword: false
+        isPassword: false,
+        keyboardType: .emailAddress
     ))
     let passwordView = LoginInputView(config: .init(
         title: "Password",
         placeholder: "Your Password",
-        isPassword: true
+        isPassword: true,
+        keyboardType: .alphabet
     ))
     let loginButton = UILabel()
+    let loginLoading = UIActivityIndicatorView()
+    let loginErrorMessageView = UILabel()
 
     let manager = LoginManager()
 
@@ -47,6 +51,15 @@ class LoginViewController: UIViewController {
         loginButton.font = .systemFont(ofSize: 26, weight: .bold)
         loginButton.isUserInteractionEnabled = true
         loginButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginAction)))
+
+        loginLoading.color = .black
+        loginLoading.style = .large
+        loginLoading.alpha = 0
+
+        loginErrorMessageView.alpha = 0
+        loginErrorMessageView.textColor = .systemPink
+        loginErrorMessageView.font = .systemFont(ofSize: 16, weight: .semibold)
+        loginErrorMessageView.textAlignment = .center
     }
 
     private func layout() {
@@ -87,9 +100,24 @@ class LoginViewController: UIViewController {
         mainContentView.addSubview(loginButton)
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            loginButton.topAnchor.constraint(equalTo: passwordView.bottomAnchor, constant: 16),
-            loginButton.centerXAnchor.constraint(equalTo: layout.centerXAnchor),
-            loginButton.bottomAnchor.constraint(equalTo: layout.bottomAnchor)
+            loginButton.topAnchor.constraint(equalTo: passwordView.bottomAnchor, constant: 32),
+            loginButton.centerXAnchor.constraint(equalTo: layout.centerXAnchor)
+        ])
+
+        mainContentView.addSubview(loginLoading)
+        loginLoading.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            loginLoading.centerXAnchor.constraint(equalTo: loginButton.centerXAnchor),
+            loginLoading.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor)
+        ])
+
+        mainContentView.addSubview(loginErrorMessageView)
+        loginErrorMessageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            loginErrorMessageView.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 8),
+            loginErrorMessageView.leadingAnchor.constraint(equalTo: layout.leadingAnchor),
+            loginErrorMessageView.trailingAnchor.constraint(equalTo: layout.trailingAnchor),
+            loginErrorMessageView.bottomAnchor.constraint(equalTo: layout.bottomAnchor)
         ])
     }
 }
@@ -109,5 +137,36 @@ extension LoginViewController {
 
         emailView.cleanError()
         passwordView.cleanError()
+
+        UIView.animate(withDuration: 0.1) { [weak self] in
+            guard let self else { return }
+            loginButton.alpha = 0
+            loginLoading.startAnimating()
+            loginLoading.alpha = 1
+        }
+
+        Task {
+            do {
+                try await manager.loginAction()
+                try await manager.createToken()
+
+                await MainActor.run {
+                    let rootViewController = RootViewController()
+                    rootViewController.modalPresentationStyle = .fullScreen
+                    present(rootViewController, animated: true)
+                }
+            } catch {
+                await MainActor.run {
+                    UIView.animate(withDuration: 0.25) { [weak self] in
+                        guard let self else { return }
+                        loginErrorMessageView.alpha = 1
+                        loginErrorMessageView.text = "Email or Password wrong."
+                        loginButton.alpha = 1
+                        loginLoading.alpha = 0
+                        loginLoading.stopAnimating()
+                    }
+                }
+            }
+        }
     }
 }
