@@ -14,6 +14,8 @@ class RootViewController: UIViewController {
     let addNewLinkButton = RVCAddNewLinkView()
     let newUrlInputView = RVCNewUrlInputView()
 
+    let manager = RootViewControllerManager()
+
     override func viewDidLoad() {
         setup()
         layout()
@@ -87,9 +89,15 @@ extension RootViewController: RVCNewUrlInputViewDelegate {
 
     func addNewUrl(url: String) {
         Task {
-            print("✅ Url: \(url)")
-            print("✅ Do add things")
-            try? await Task.sleep(nanoseconds: 3_000_000_000)
+            do {
+                if try await manager.addNewUrl(url: url) {
+                    addBanner(config: .init(message: "Add url \(url)", backgroundColor: .systemGreen))
+                } else {
+                    addBanner(config: .init(message: "Fail add url \(url)", backgroundColor: .systemRed))
+                }
+            } catch {
+                addBanner(config: .init(message: "Error: \(error.localizedDescription)", backgroundColor: .systemRed))
+            }
             await MainActor.run { inputCancel() }
         }
     }

@@ -18,11 +18,13 @@ class RVCNewUrlInputView: UIView {
     let titleView = UILabel()
     let urlTextView = UITextField()
     let bottomLineView = UIView()
+    let errorMessageView = UILabel()
     let cancelButton = PaddedTextField()
     let addButton = PaddedTextField()
     let loadingView = UIActivityIndicatorView()
 
     weak var delegate: RVCNewUrlInputViewDelegate?
+    var errorMessageHeightConstraint: NSLayoutConstraint?
 
     init() {
         super.init(frame: .zero)
@@ -63,6 +65,11 @@ class RVCNewUrlInputView: UIView {
 
         bottomLineView.layer.cornerRadius = 2.0
         bottomLineView.backgroundColor = .black
+
+        errorMessageView.alpha = 0
+        errorMessageView.textColor = .systemPink
+        errorMessageView.font = .systemFont(ofSize: 16, weight: .semibold)
+        errorMessageView.textAlignment = .center
 
         cancelButton.textInsets = .init(top: 4, left: 8, bottom: 4, right: 8)
         cancelButton.text = "Cancel"
@@ -112,10 +119,20 @@ class RVCNewUrlInputView: UIView {
             bottomLineView.trailingAnchor.constraint(equalTo: urlTextView.trailingAnchor)
         ])
 
+        addSubview(errorMessageView)
+        errorMessageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            errorMessageView.topAnchor.constraint(equalTo: bottomLineView.bottomAnchor, constant: 4),
+            errorMessageView.leadingAnchor.constraint(equalTo: layout.leadingAnchor),
+            errorMessageView.trailingAnchor.constraint(equalTo: layout.trailingAnchor)
+        ])
+        errorMessageHeightConstraint = errorMessageView.heightAnchor.constraint(equalToConstant: 0)
+        errorMessageHeightConstraint?.isActive = true
+
         addSubview(cancelButton)
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            cancelButton.topAnchor.constraint(equalTo: bottomLineView.bottomAnchor, constant: 8),
+            cancelButton.topAnchor.constraint(equalTo: errorMessageView.bottomAnchor, constant: 8),
             cancelButton.trailingAnchor.constraint(equalTo: layout.centerXAnchor, constant: -12),
             cancelButton.bottomAnchor.constraint(equalTo: layout.bottomAnchor)
         ])
@@ -123,7 +140,7 @@ class RVCNewUrlInputView: UIView {
         addSubview(addButton)
         addButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            addButton.topAnchor.constraint(equalTo: bottomLineView.bottomAnchor, constant: 8),
+            addButton.topAnchor.constraint(equalTo: errorMessageView.bottomAnchor, constant: 8),
             addButton.leadingAnchor.constraint(equalTo: layout.centerXAnchor, constant: 12),
             addButton.widthAnchor.constraint(equalTo: cancelButton.widthAnchor),
             addButton.bottomAnchor.constraint(equalTo: layout.bottomAnchor)
@@ -140,6 +157,30 @@ class RVCNewUrlInputView: UIView {
 
 extension RVCNewUrlInputView {
     @objc func addNewUrlAction() {
+        urlTextView.resignFirstResponder()
+        guard let url = URL(string: urlTextView.text ?? "") else {
+            UIView.animate(withDuration: 0.25) { [weak self] in
+                guard let self else { return }
+                errorMessageView.text = "Invalid URL"
+                errorMessageView.alpha = 1
+                errorMessageHeightConstraint?.constant = 30
+                bottomLineView.backgroundColor = .systemPink
+                layoutIfNeeded()
+            }
+            return
+        }
+
+        if errorMessageView.alpha == 1 {
+            UIView.animate(withDuration: 0.25) { [weak self] in
+                guard let self else { return }
+                errorMessageView.text = ""
+                errorMessageView.alpha = 0
+                errorMessageHeightConstraint?.constant = 0
+                bottomLineView.backgroundColor = .black
+                layoutIfNeeded()
+            }
+        }
+
         loadingView.startAnimating()
         loadingView.isHidden = false
         cancelButton.alpha = 0.5
@@ -150,6 +191,7 @@ extension RVCNewUrlInputView {
     }
 
     @objc func cancelAdd() {
+        urlTextView.resignFirstResponder()
         delegate?.inputCancel()
     }
 }

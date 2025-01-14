@@ -10,7 +10,7 @@ import Foundation
 
 extension APIManager {
     enum Links {
-        case login, refreshToken
+        case login, refreshToken, createNewMonitorUrl
         case createToken, monitorUrls
 
         func getUrl() -> URL {
@@ -19,6 +19,8 @@ extension APIManager {
                     return URL(string: LOGIN_URL)!
                 case .refreshToken:
                     return URL(string: REFRESH_TOKEN_URL)!
+                case .createNewMonitorUrl:
+                    return URL(string: CREATE_URL)!
                 default:
                     return URL(string: BASE_URL)!
             }
@@ -77,18 +79,23 @@ extension APIManager {
 }
 
 class APIManager {
+    private func addJsonBody(request: URLRequest, data: [String: Any]) throws -> URLRequest {
+        var request = request
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: data)
+        } catch {
+            throw APIError.jsonSerialization
+        }
+        return request
+    }
+
     func loginWith(email: String, password: String) async throws -> LoginResponse {
         let url = Links.login.getUrl()
         var request = Methods.post.getRequest(url: url)
         let parameters: [String: Any] = [
             "email": email, "password": password
         ]
-
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
-        } catch {
-            throw APIError.jsonSerialization
-        }
+        request = try addJsonBody(request: request, data: parameters)
 
         do {
             let result = try await sendRequestFlow(request: request, dataType: LoginResponse.self, withToken: false)
@@ -129,6 +136,20 @@ class APIManager {
         do {
             let result = try await sendRequestFlow(request: request, dataType: MonitorResponse.self)
             return result
+        } catch {
+            throw APIError.urlSession
+        }
+    }
+
+    func createNewMonitorUrl(link: String) async throws -> Bool {
+        let url = Links.createNewMonitorUrl.getUrl()
+        var request = Methods.post.getRequest(url: url)
+        let parameters: [String: Any] = ["url": link]
+        request = try addJsonBody(request: request, data: parameters)
+
+        do {
+            let result = try await sendRequestFlow(request: request, dataType: EmptyResponse.self)
+            return result.success
         } catch {
             throw APIError.urlSession
         }

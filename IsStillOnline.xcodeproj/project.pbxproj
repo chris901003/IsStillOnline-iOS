@@ -13,6 +13,10 @@
 		051792E22D3556D20080AC2E /* RVCAddNewLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792E12D3556D20080AC2E /* RVCAddNewLinkView.swift */; };
 		051792E42D3559070080AC2E /* RVCNewUrlInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792E32D3559070080AC2E /* RVCNewUrlInputView.swift */; };
 		051792E92D360CA60080AC2E /* PaddedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792E82D360CA60080AC2E /* PaddedTextField.swift */; };
+		054C8E632D369F9200D120C9 /* RootViewControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C8E622D369F9200D120C9 /* RootViewControllerManager.swift */; };
+		054C8E652D36A32400D120C9 /* EmptyResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C8E642D36A32400D120C9 /* EmptyResponseData.swift */; };
+		054C8E672D36AB9F00D120C9 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C8E662D36AB9F00D120C9 /* BannerView.swift */; };
+		054C8E692D36B0D800D120C9 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C8E682D36B0D800D120C9 /* UIViewController+Extension.swift */; };
 		05E5DACA2D30C7B00037F9A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAC92D30C7B00037F9A8 /* AppDelegate.swift */; };
 		05E5DACC2D30C7B00037F9A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DACB2D30C7B00037F9A8 /* SceneDelegate.swift */; };
 		05E5DAD32D30C7B10037F9A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05E5DAD22D30C7B10037F9A8 /* Assets.xcassets */; };
@@ -36,6 +40,10 @@
 		051792E12D3556D20080AC2E /* RVCAddNewLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVCAddNewLinkView.swift; sourceTree = "<group>"; };
 		051792E32D3559070080AC2E /* RVCNewUrlInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVCNewUrlInputView.swift; sourceTree = "<group>"; };
 		051792E82D360CA60080AC2E /* PaddedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedTextField.swift; sourceTree = "<group>"; };
+		054C8E622D369F9200D120C9 /* RootViewControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewControllerManager.swift; sourceTree = "<group>"; };
+		054C8E642D36A32400D120C9 /* EmptyResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponseData.swift; sourceTree = "<group>"; };
+		054C8E662D36AB9F00D120C9 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
+		054C8E682D36B0D800D120C9 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		05E5DAC62D30C7B00037F9A8 /* IsStillOnline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IsStillOnline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E5DAC92D30C7B00037F9A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05E5DACB2D30C7B00037F9A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +86,7 @@
 			children = (
 				051792E02D3556B90080AC2E /* Subviews */,
 				051792DE2D354B6A0080AC2E /* RootViewController.swift */,
+				054C8E622D369F9200D120C9 /* RootViewControllerManager.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -94,6 +103,7 @@
 		051792E72D360C980080AC2E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				054C8E662D36AB9F00D120C9 /* BannerView.swift */,
 				051792E82D360CA60080AC2E /* PaddedTextField.swift */,
 			);
 			path = Common;
@@ -174,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				05E5DAEC2D314E670037F9A8 /* APIResponseData.swift */,
+				054C8E642D36A32400D120C9 /* EmptyResponseData.swift */,
 				05E5DAEA2D314CBF0037F9A8 /* LoginResponseData.swift */,
 				05E5DAF72D340BE80037F9A8 /* MonitorUrlsResponseData.swift */,
 				05E5DAF52D3406310037F9A8 /* TokenResponseData.swift */,
@@ -193,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				05E5DAFC2D34B00E0037F9A8 /* String+Extension.swift */,
+				054C8E682D36B0D800D120C9 /* UIViewController+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -270,8 +282,10 @@
 				05E5DAE82D3148720037F9A8 /* APIManager.swift in Sources */,
 				05E5DAED2D314E670037F9A8 /* APIResponseData.swift in Sources */,
 				05E5DACA2D30C7B00037F9A8 /* AppDelegate.swift in Sources */,
+				054C8E672D36AB9F00D120C9 /* BannerView.swift in Sources */,
 				051792DC2D354A7B0080AC2E /* ConstKeychain.swift in Sources */,
 				05E5DAE52D30D28F0037F9A8 /* ConstUrls.swift in Sources */,
+				054C8E652D36A32400D120C9 /* EmptyResponseData.swift in Sources */,
 				051792DA2D3547820080AC2E /* KeychainManager.swift in Sources */,
 				05E5DAF02D3151B40037F9A8 /* LoginInputView.swift in Sources */,
 				05E5DAF22D3159580037F9A8 /* LoginManager.swift in Sources */,
@@ -282,9 +296,11 @@
 				051792E22D3556D20080AC2E /* RVCAddNewLinkView.swift in Sources */,
 				051792E42D3559070080AC2E /* RVCNewUrlInputView.swift in Sources */,
 				051792DF2D354B6A0080AC2E /* RootViewController.swift in Sources */,
+				054C8E632D369F9200D120C9 /* RootViewControllerManager.swift in Sources */,
 				05E5DACC2D30C7B00037F9A8 /* SceneDelegate.swift in Sources */,
 				05E5DAFD2D34B00E0037F9A8 /* String+Extension.swift in Sources */,
 				05E5DAF62D3406310037F9A8 /* TokenResponseData.swift in Sources */,
+				054C8E692D36B0D800D120C9 /* UIViewController+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
