@@ -10,16 +10,87 @@ import Foundation
 import UIKit
 
 class RootViewController: UIViewController {
+    let titleView = UILabel()
+    let addNewLinkButton = RVCAddNewLinkView()
+    let newUrlInputView = RVCNewUrlInputView()
+
     override func viewDidLoad() {
         setup()
         layout()
     }
 
     private func setup() {
-        view.backgroundColor = .blue
+        view.backgroundColor = .white
+
+        titleView.text = "Links"
+        titleView.font = .systemFont(ofSize: 24, weight: .bold)
+        titleView.textAlignment = .center
+
+        addNewLinkButton.isUserInteractionEnabled = true
+        addNewLinkButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addUrlAction)))
+
+        newUrlInputView.alpha = 0
+        newUrlInputView.isHidden = true
+        newUrlInputView.delegate = self
     }
 
     private func layout() {
-        
+        view.layoutMargins = .init(top: 8, left: 8, bottom: 0, right: 8)
+        let layout = view.layoutMarginsGuide
+
+        view.addSubview(titleView)
+        titleView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            titleView.topAnchor.constraint(equalTo: layout.topAnchor),
+            titleView.leadingAnchor.constraint(equalTo: layout.leadingAnchor),
+            titleView.trailingAnchor.constraint(equalTo: layout.trailingAnchor)
+        ])
+
+        view.addSubview(addNewLinkButton)
+        addNewLinkButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            addNewLinkButton.topAnchor.constraint(equalTo: layout.topAnchor),
+            addNewLinkButton.trailingAnchor.constraint(equalTo: layout.trailingAnchor)
+        ])
+
+        view.addSubview(newUrlInputView)
+        newUrlInputView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            newUrlInputView.centerXAnchor.constraint(equalTo: layout.centerXAnchor),
+            newUrlInputView.centerYAnchor.constraint(equalTo: layout.centerYAnchor)
+        ])
+    }
+}
+
+// MARK: - Utility
+extension RootViewController {
+    @objc func addUrlAction() {
+        newUrlInputView.isHidden = false
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self else { return }
+            newUrlInputView.alpha = 1
+        }
+    }
+}
+
+// MARK: - RVCNewUrlInputViewDelegate
+extension RootViewController: RVCNewUrlInputViewDelegate {
+    func inputCancel() {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self else { return }
+            newUrlInputView.alpha = 0
+        } completion: { [weak self] _ in
+            guard let self else { return }
+            newUrlInputView.isHidden = true
+        }
+    }
+
+    func addNewUrl(url: String) {
+        Task {
+            print("✅ Url: \(url)")
+            print("✅ Do add things")
+            try? await Task.sleep(nanoseconds: 3_000_000_000)
+            await MainActor.run { inputCancel() }
+        }
     }
 }

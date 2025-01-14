@@ -21,14 +21,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
 
         Task {
+            print("✅ Check token is valid")
             let apiManager = APIManager()
             if await apiManager.checkToken() {
+                print("✅ Token is valid")
                 await MainActor.run {
                     let rootVC = RootViewController()
                     window?.rootViewController = rootVC
                     window?.makeKeyAndVisible()
                 }
             } else {
+                print("✅ Token is invalid")
                 await MainActor.run {
                     let loginVC = LoginViewController()
                     window?.rootViewController = loginVC

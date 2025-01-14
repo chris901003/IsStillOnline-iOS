@@ -10,6 +10,9 @@
 		051792DA2D3547820080AC2E /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792D92D3547820080AC2E /* KeychainManager.swift */; };
 		051792DC2D354A7B0080AC2E /* ConstKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792DB2D354A7B0080AC2E /* ConstKeychain.swift */; };
 		051792DF2D354B6A0080AC2E /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792DE2D354B6A0080AC2E /* RootViewController.swift */; };
+		051792E22D3556D20080AC2E /* RVCAddNewLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792E12D3556D20080AC2E /* RVCAddNewLinkView.swift */; };
+		051792E42D3559070080AC2E /* RVCNewUrlInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792E32D3559070080AC2E /* RVCNewUrlInputView.swift */; };
+		051792E92D360CA60080AC2E /* PaddedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792E82D360CA60080AC2E /* PaddedTextField.swift */; };
 		05E5DACA2D30C7B00037F9A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DAC92D30C7B00037F9A8 /* AppDelegate.swift */; };
 		05E5DACC2D30C7B00037F9A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E5DACB2D30C7B00037F9A8 /* SceneDelegate.swift */; };
 		05E5DAD32D30C7B10037F9A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05E5DAD22D30C7B10037F9A8 /* Assets.xcassets */; };
@@ -30,6 +33,9 @@
 		051792D92D3547820080AC2E /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		051792DB2D354A7B0080AC2E /* ConstKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstKeychain.swift; sourceTree = "<group>"; };
 		051792DE2D354B6A0080AC2E /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		051792E12D3556D20080AC2E /* RVCAddNewLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVCAddNewLinkView.swift; sourceTree = "<group>"; };
+		051792E32D3559070080AC2E /* RVCNewUrlInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVCNewUrlInputView.swift; sourceTree = "<group>"; };
+		051792E82D360CA60080AC2E /* PaddedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedTextField.swift; sourceTree = "<group>"; };
 		05E5DAC62D30C7B00037F9A8 /* IsStillOnline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IsStillOnline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E5DAC92D30C7B00037F9A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05E5DACB2D30C7B00037F9A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -70,9 +76,27 @@
 		051792DD2D354B5E0080AC2E /* Root */ = {
 			isa = PBXGroup;
 			children = (
+				051792E02D3556B90080AC2E /* Subviews */,
 				051792DE2D354B6A0080AC2E /* RootViewController.swift */,
 			);
 			path = Root;
+			sourceTree = "<group>";
+		};
+		051792E02D3556B90080AC2E /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				051792E12D3556D20080AC2E /* RVCAddNewLinkView.swift */,
+				051792E32D3559070080AC2E /* RVCNewUrlInputView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		051792E72D360C980080AC2E /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				051792E82D360CA60080AC2E /* PaddedTextField.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		05E5DABD2D30C7B00037F9A8 = {
@@ -96,6 +120,7 @@
 			children = (
 				05E5DAE62D3148540037F9A8 /* API */,
 				05E5DADD2D30CBC30037F9A8 /* Account */,
+				051792E72D360C980080AC2E /* Common */,
 				05E5DAE12D30D1230037F9A8 /* Const */,
 				05E5DAFB2D34AFF90037F9A8 /* Extension */,
 				051792D82D3547700080AC2E /* Keychain */,
@@ -253,6 +278,9 @@
 				05E5DAEB2D314CBF0037F9A8 /* LoginResponseData.swift in Sources */,
 				05E5DAE02D30CBE50037F9A8 /* LoginViewController.swift in Sources */,
 				05E5DAF82D340BE80037F9A8 /* MonitorUrlsResponseData.swift in Sources */,
+				051792E92D360CA60080AC2E /* PaddedTextField.swift in Sources */,
+				051792E22D3556D20080AC2E /* RVCAddNewLinkView.swift in Sources */,
+				051792E42D3559070080AC2E /* RVCNewUrlInputView.swift in Sources */,
 				051792DF2D354B6A0080AC2E /* RootViewController.swift in Sources */,
 				05E5DACC2D30C7B00037F9A8 /* SceneDelegate.swift in Sources */,
 				05E5DAFD2D34B00E0037F9A8 /* String+Extension.swift in Sources */,

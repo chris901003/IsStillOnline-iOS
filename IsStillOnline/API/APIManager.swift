@@ -120,7 +120,6 @@ class APIManager {
 
     func getMonitorUrls() async throws -> MonitorResponse {
         var urlComponents = Links.monitorUrls.getUrlComponent()
-        urlComponents.queryItems = [URLQueryItem(name: "owner", value: APIManager.uid)]
 
         guard let url = urlComponents.url else {
             throw APIError.url

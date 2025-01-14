@@ -49,10 +49,13 @@ extension APIManager {
     }
 
     func checkToken() async -> Bool {
+        // TODO: 好像遇到需要 refresh token 會怪怪的
         guard let uid = KeychainManager.getFromKeychain(key: KEYCHAIN_USER_UID),
               let token = KeychainManager.getFromKeychain(key: KEYCHAIN_TOKEN) else { return false }
         APIManager.uid = uid
         APIManager.token = token
+        print("✅ Uid: \(uid)")
+        print("✅ Token: \(token)")
         guard let _ = try? await getMonitorUrls() else {
             return false
         }
