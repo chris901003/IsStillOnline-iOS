@@ -40,6 +40,8 @@ extension APIManager {
                 guard try await refreshAccessToken() else {
                     throw APIError.tokenExpired
                 }
+                var request = try addAccessToken(request: request)
+                return try await sendRequestFlow(request: request, dataType: dataType)
             } else if httpResponse.statusCode != 200 {
                 throw APIError.urlSession
             }
@@ -49,13 +51,10 @@ extension APIManager {
     }
 
     func checkToken() async -> Bool {
-        // TODO: 好像遇到需要 refresh token 會怪怪的
         guard let uid = KeychainManager.getFromKeychain(key: KEYCHAIN_USER_UID),
               let token = KeychainManager.getFromKeychain(key: KEYCHAIN_TOKEN) else { return false }
         APIManager.uid = uid
         APIManager.token = token
-        print("✅ Uid: \(uid)")
-        print("✅ Token: \(token)")
         guard let _ = try? await getMonitorUrls() else {
             return false
         }
@@ -80,22 +79,12 @@ extension APIManager {
      - Authors: HongYan
      */
     private func refreshAccessToken() async throws -> Bool {
-        guard let token = APIManager.token else {
-            throw APIManager.APIError.tokenNotFound
-        }
         let url = Links.refreshToken.getUrl()
-        var request = Methods.post.getRequest(url: url)
+        var request = Methods.get.getRequest(url: url)
         request = try addAccessToken(request: request)
-        let parameter: [String: Any] = ["token": token]
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: parameter)
-        } catch {
-            throw APIError.jsonSerialization
-        }
-
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else { return false }
+              httpResponse.statusCode == 200 else {return false }
         let result = try APIManager.decoder.decode(TokenResponse.self, from: data)
         APIManager.token = result.data.token
         return true
