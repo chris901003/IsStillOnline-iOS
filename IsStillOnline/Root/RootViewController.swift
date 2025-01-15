@@ -155,15 +155,19 @@ extension RootViewController: RVCNewUrlInputViewDelegate {
     func addNewUrl(url: String) {
         Task {
             do {
-                if try await manager.addNewUrl(url: url) {
-                    addBanner(config: .init(message: "Add url \(url)", backgroundColor: .systemGreen))
+                if let result = try await manager.addNewUrl(url: url) {
+                    addBanner(config: .init(message: "\(result)", backgroundColor: .systemRed))
                 } else {
-                    addBanner(config: .init(message: "Fail add url \(url)", backgroundColor: .systemRed))
+                    addBanner(config: .init(message: "Add url \(url)", backgroundColor: .systemGreen))
                 }
             } catch {
                 addBanner(config: .init(message: "Error: \(error.localizedDescription)", backgroundColor: .systemRed))
             }
-            await MainActor.run { inputCancel() }
+            await MainActor.run {
+                newUrlInputView.reset()
+                tableView.reloadData()
+                inputCancel()
+            }
         }
     }
 }

@@ -41,6 +41,15 @@ class RVCNewUrlInputView: UIView {
         layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 15).cgPath
     }
 
+    func reset() {
+        urlTextView.text = ""
+        loadingView.stopAnimating()
+        loadingView.isHidden = true
+        cancelButton.alpha = 1
+        cancelButton.isUserInteractionEnabled = true
+        addButton.alpha = 1
+    }
+
     private func setup() {
         backgroundColor = .white
         layer.cornerRadius = 15.0

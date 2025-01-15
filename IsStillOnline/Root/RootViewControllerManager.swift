@@ -62,7 +62,26 @@ class RootViewControllerManager {
         }
     }
 
-    func addNewUrl(url: String) async throws -> Bool {
-        return try await apiManager.createNewMonitorUrl(link: url)
+    private func checkSingleUrl(url: URL) async -> String? {
+        do {
+            let (_, response) = try await URLSession.shared.data(from: url)
+            guard let httpResponse = response as? HTTPURLResponse else {
+                return "Fail add url \(url)"
+            }
+            let statusCode = httpResponse.statusCode
+            let isSuccess = 200 <= statusCode && statusCode <= 299
+            monitorUrls.append(url)
+            linkCellConfigs.append(.init(url: url.absoluteString, statusCode: "\(statusCode)", isSuccess: isSuccess, updateTime: Date.now))
+            return nil
+        } catch {
+            return "Hostname could not be found."
+        }
+    }
+
+    func addNewUrl(url: String) async throws -> String? {
+        if let result = await checkSingleUrl(url: URL(string: url)!) {
+            return result
+        }
+        return try await apiManager.createNewMonitorUrl(link: url) ? nil : "Fail add url \(url)"
     }
 }
