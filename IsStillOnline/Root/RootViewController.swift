@@ -10,15 +10,20 @@ import Foundation
 import UIKit
 
 class RootViewController: UIViewController {
+    let cellId = "LinkCellId"
+
     let titleView = UILabel()
     let addNewLinkButton = RVCAddNewLinkView()
     let newUrlInputView = RVCNewUrlInputView()
+    let copyrightView = UILabel()
+    let tableView = UITableView()
 
     let manager = RootViewControllerManager()
 
     override func viewDidLoad() {
         setup()
         layout()
+        registerCell()
     }
 
     private func setup() {
@@ -34,6 +39,15 @@ class RootViewController: UIViewController {
         newUrlInputView.alpha = 0
         newUrlInputView.isHidden = true
         newUrlInputView.delegate = self
+
+        copyrightView.text = "Copyright © 2025 Zephyr Huang"
+        copyrightView.textColor = .systemGray
+        copyrightView.font = .systemFont(ofSize: 12, weight: .bold)
+        copyrightView.textAlignment = .center
+
+        tableView.separatorStyle = .none
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 
     private func layout() {
@@ -61,6 +75,27 @@ class RootViewController: UIViewController {
             newUrlInputView.centerXAnchor.constraint(equalTo: layout.centerXAnchor),
             newUrlInputView.centerYAnchor.constraint(equalTo: layout.centerYAnchor)
         ])
+
+        view.addSubview(copyrightView)
+        copyrightView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            copyrightView.bottomAnchor.constraint(equalTo: layout.bottomAnchor),
+            copyrightView.leadingAnchor.constraint(equalTo: layout.leadingAnchor),
+            copyrightView.trailingAnchor.constraint(equalTo: layout.trailingAnchor)
+        ])
+
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 16),
+            tableView.leadingAnchor.constraint(equalTo: layout.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: layout.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: copyrightView.topAnchor, constant: -8)
+        ])
+    }
+
+    private func registerCell() {
+        tableView.register(RVCLinkCell.self, forCellReuseIdentifier: cellId)
     }
 }
 
@@ -72,6 +107,20 @@ extension RootViewController {
             guard let self else { return }
             newUrlInputView.alpha = 1
         }
+    }
+}
+
+// MARK: - UITableViewDelegate, UITableViewDataSource
+extension RootViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        2
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? RVCLinkCell else {
+            return UITableViewCell()
+        }
+        return cell
     }
 }
 
