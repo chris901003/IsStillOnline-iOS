@@ -9,9 +9,19 @@
 import Foundation
 import UIKit
 
+struct RVCLinkCellConfig {
+    let url: String
+    let statusCode: String
+    let isSuccess: Bool
+    let updateTime: Date
+}
+
 class RVCLinkCell: UITableViewCell {
     let mainContentView = UIView()
     let statusCodeView = RVCLCStatusCodeView()
+    let linkView = RVCLCLinkView()
+    let statusView = RVCLCStatusLabelView()
+    let updateLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,10 +33,21 @@ class RVCLinkCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func configCell(config: RVCLinkCellConfig) {
+        statusCodeView.config(statusCode: config.statusCode, isSuccess: config.isSuccess)
+        linkView.config(linkStr: config.url)
+        statusView.config(code: config.statusCode)
+        updateLabel.text = "Update: \(DateFormatterManager.shared.dateFormat(type: .MM_dd_HH_mm, date: config.updateTime))"
+    }
+
     private func setup() {
         mainContentView.layer.cornerRadius = 15.0
         mainContentView.layer.borderColor = UIColor.black.cgColor
         mainContentView.layer.borderWidth = 1.5
+
+        updateLabel.text = "Update: \(DateFormatterManager.shared.dateFormat(type: .MM_dd_HH_mm, date: Date.now))"
+        updateLabel.textColor = .systemGray
+        updateLabel.font = .systemFont(ofSize: 12, weight: .bold)
     }
 
     private func layout() {
@@ -48,6 +69,30 @@ class RVCLinkCell: UITableViewCell {
             statusCodeView.topAnchor.constraint(equalTo: layout.topAnchor),
             statusCodeView.bottomAnchor.constraint(equalTo: layout.bottomAnchor),
             statusCodeView.leadingAnchor.constraint(equalTo: layout.leadingAnchor)
+        ])
+
+        mainContentView.addSubview(linkView)
+        linkView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            linkView.leadingAnchor.constraint(equalTo: statusCodeView.trailingAnchor, constant: 12),
+            linkView.topAnchor.constraint(equalTo: layout.topAnchor, constant: 4),
+            linkView.trailingAnchor.constraint(equalTo: layout.trailingAnchor)
+        ])
+
+        mainContentView.addSubview(statusView)
+        statusView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            statusView.leadingAnchor.constraint(equalTo: statusCodeView.trailingAnchor, constant: 12),
+            statusView.topAnchor.constraint(equalTo: linkView.bottomAnchor, constant: 4),
+            statusView.trailingAnchor.constraint(equalTo: layout.trailingAnchor)
+        ])
+
+        mainContentView.addSubview(updateLabel)
+        updateLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            updateLabel.bottomAnchor.constraint(equalTo: layout.bottomAnchor),
+            updateLabel.leadingAnchor.constraint(equalTo: statusCodeView.trailingAnchor, constant: 12),
+            updateLabel.trailingAnchor.constraint(equalTo: layout.trailingAnchor)
         ])
     }
 }

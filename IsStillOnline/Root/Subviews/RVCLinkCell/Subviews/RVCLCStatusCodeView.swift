@@ -13,6 +13,17 @@ class RVCLCStatusCodeView: UIView {
     let statusView = UIView()
     let statusCodeLabel = UILabel()
 
+    let blueGradientLayer = CAGradientLayer()
+    let statusGradientLayer = CAGradientLayer()
+    let greenColor = [
+        UIColor(hex: "#1d976cff")?.cgColor as Any,
+        UIColor(hex: "#93f9b9ff")?.cgColor as Any
+    ]
+    let redColor = [
+        UIColor(hex: "#f85032ff")?.cgColor as Any,
+        UIColor(hex: "#e73827ff")?.cgColor as Any
+    ]
+
     init() {
         super.init(frame: .zero)
         setup()
@@ -25,7 +36,6 @@ class RVCLCStatusCodeView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        let blueGradientLayer = CAGradientLayer()
         blueGradientLayer.colors = [
             UIColor(hex: "#2980b9ff")?.cgColor as Any,
             UIColor(hex: "#6dd5faff")?.cgColor as Any,
@@ -37,16 +47,12 @@ class RVCLCStatusCodeView: UIView {
         blueGradientLayer.cornerRadius = 55.0
         layer.insertSublayer(blueGradientLayer, at: 0)
 
-        let greenGradientLayer = CAGradientLayer()
-        greenGradientLayer.colors = [
-            UIColor(hex: "#1d976cff")?.cgColor as Any,
-            UIColor(hex: "#93f9b9ff")?.cgColor as Any
-        ]
-        greenGradientLayer.startPoint = CGPoint(x: 0, y: 1)
-        greenGradientLayer.endPoint = CGPoint(x: 1, y: 0)
-        greenGradientLayer.frame = statusView.bounds
-        greenGradientLayer.cornerRadius = 50.0
-        statusView.layer.insertSublayer(greenGradientLayer, at: 0)
+        statusGradientLayer.colors = greenColor
+        statusGradientLayer.startPoint = CGPoint(x: 0, y: 1)
+        statusGradientLayer.endPoint = CGPoint(x: 1, y: 0)
+        statusGradientLayer.frame = statusView.bounds
+        statusGradientLayer.cornerRadius = 50.0
+        statusView.layer.insertSublayer(statusGradientLayer, at: 0)
 
         layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 55).cgPath
     }
@@ -90,5 +96,14 @@ class RVCLCStatusCodeView: UIView {
             statusCodeLabel.centerXAnchor.constraint(equalTo: statusView.centerXAnchor),
             statusCodeLabel.centerYAnchor.constraint(equalTo: statusView.centerYAnchor)
         ])
+    }
+
+    func config(statusCode: String, isSuccess: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            statusCodeLabel.text = statusCode
+            statusGradientLayer.colors = isSuccess ? greenColor : redColor
+            setNeedsDisplay()
+        }
     }
 }
