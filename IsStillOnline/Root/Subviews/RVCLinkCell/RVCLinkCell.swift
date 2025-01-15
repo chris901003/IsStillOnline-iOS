@@ -41,6 +41,8 @@ class RVCLinkCell: UITableViewCell {
     }
 
     private func setup() {
+        selectionStyle = .none
+
         mainContentView.layer.cornerRadius = 15.0
         mainContentView.layer.borderColor = UIColor.black.cgColor
         mainContentView.layer.borderWidth = 1.5

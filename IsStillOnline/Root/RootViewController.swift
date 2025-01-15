@@ -27,6 +27,8 @@ class RootViewController: UIViewController {
     }
 
     private func setup() {
+        manager.delegate = self
+
         view.backgroundColor = .white
 
         titleView.text = "Links"
@@ -92,6 +94,8 @@ class RootViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: layout.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: copyrightView.topAnchor, constant: -8)
         ])
+
+        view.bringSubviewToFront(newUrlInputView)
     }
 
     private func registerCell() {
@@ -113,14 +117,26 @@ extension RootViewController {
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension RootViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        manager.linkCellConfigs.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? RVCLinkCell else {
             return UITableViewCell()
         }
+        cell.configCell(config: manager.linkCellConfigs[indexPath.row])
         return cell
+    }
+}
+
+// MARK: - RootViewControllerManagerDelegate
+extension RootViewController: RootViewControllerManagerDelegate {
+    func showBanner(message: String, backgroundColor: UIColor) {
+        addBanner(config: .init(message: message, backgroundColor: backgroundColor))
+    }
+
+    func reloadTable() {
+        tableView.reloadData()
     }
 }
 
