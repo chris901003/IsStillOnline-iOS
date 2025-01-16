@@ -11,36 +11,35 @@ import UIKit
 
 protocol RootViewControllerManagerDelegate: AnyObject {
     func showBanner(message: String, backgroundColor: UIColor)
-    func reloadTable()
+    func reloadTable(at indexPath: IndexPath?)
 }
 
 class RootViewControllerManager {
     let apiManager = APIManager()
 
     var linkCellConfigs = [RVCLinkCellConfig]()
-    private var monitorUrls = [URL]()
 
     var delegate: RootViewControllerManagerDelegate? {
-        didSet { delegate?.reloadTable() }
+        didSet { delegate?.reloadTable(at: nil) }
     }
 
     init() {
         Task {
-            await fetchMonitorUrls()
-            await checkAllUrlStatus()
-            await MainActor.run { delegate?.reloadTable() }
+            let urls = await fetchMonitorUrls()
+            await checkAllUrlStatus(monitorUrls: urls)
+            await MainActor.run { delegate?.reloadTable(at: nil) }
         }
     }
 
-    private func fetchMonitorUrls() async {
+    private func fetchMonitorUrls() async -> [URL] {
         guard let response = try? await apiManager.getMonitorUrls() else {
             delegate?.showBanner(message: "Fail to get monitor urls.", backgroundColor: .systemPink)
-            return
+            return []
         }
-        monitorUrls = response.data.urls.compactMap { URL(string: $0) }
+        return response.data.urls.compactMap { URL(string: $0) }
     }
 
-    private func checkAllUrlStatus() async {
+    private func checkAllUrlStatus(monitorUrls: [URL]) async {
         linkCellConfigs = await withTaskGroup(of: (URL, HTTPURLResponse)?.self, returning: [RVCLinkCellConfig].self) { group in
             for url in monitorUrls {
                 group.addTask {
@@ -62,26 +61,37 @@ class RootViewControllerManager {
         }
     }
 
-    private func checkSingleUrl(url: URL) async -> String? {
+    private func checkSingleUrl(url: URL) async -> (RVCLinkCellConfig?, String?) {
         do {
             let (_, response) = try await URLSession.shared.data(from: url)
             guard let httpResponse = response as? HTTPURLResponse else {
-                return "Fail add url \(url)"
+                return (nil, "Fail add url \(url)")
             }
             let statusCode = httpResponse.statusCode
             let isSuccess = 200 <= statusCode && statusCode <= 299
-            monitorUrls.append(url)
-            linkCellConfigs.append(.init(url: url.absoluteString, statusCode: "\(statusCode)", isSuccess: isSuccess, updateTime: Date.now))
-            return nil
+            return (.init(url: url.absoluteString, statusCode: "\(statusCode)", isSuccess: isSuccess, updateTime: Date.now), nil)
         } catch {
-            return "Hostname could not be found."
+            return (nil, "Hostname could not be found.")
         }
     }
 
     func addNewUrl(url: String) async throws -> String? {
-        if let result = await checkSingleUrl(url: URL(string: url)!) {
-            return result
-        }
+        let result = await checkSingleUrl(url: URL(string: url)!)
+        if let errorMessage = result.1 { return errorMessage }
+        if let conf = result.0 { linkCellConfigs.append(conf) }
         return try await apiManager.createNewMonitorUrl(link: url) ? nil : "Fail add url \(url)"
+    }
+
+    func refreshUrlAction(indexPath: IndexPath) async {
+        guard let url = URL(string: linkCellConfigs[indexPath.row].url) else { return }
+        let result = await checkSingleUrl(url: url)
+        if let errorMessage = result.1 {
+            delegate?.showBanner(message: errorMessage, backgroundColor: .systemPink)
+        } else if let conf = result.0 {
+            await MainActor.run {
+                linkCellConfigs[indexPath.row] = conf
+                delegate?.reloadTable(at: indexPath)
+            }
+        }
     }
 }

@@ -127,16 +127,26 @@ extension RootViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configCell(config: manager.linkCellConfigs[indexPath.row])
         return cell
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Task {
+            await manager.refreshUrlAction(indexPath: indexPath)
+        }
+    }
 }
 
 // MARK: - RootViewControllerManagerDelegate
 extension RootViewController: RootViewControllerManagerDelegate {
-    func showBanner(message: String, backgroundColor: UIColor) {
-        addBanner(config: .init(message: message, backgroundColor: backgroundColor))
+    func reloadTable(at indexPath: IndexPath?) {
+        if let indexPath {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        } else {
+            tableView.reloadData()
+        }
     }
 
-    func reloadTable() {
-        tableView.reloadData()
+    func showBanner(message: String, backgroundColor: UIColor) {
+        addBanner(config: .init(message: message, backgroundColor: backgroundColor))
     }
 }
 
