@@ -12,6 +12,7 @@ import UIKit
 protocol RootViewControllerManagerDelegate: AnyObject {
     func showBanner(message: String, backgroundColor: UIColor)
     func reloadTable(at indexPath: IndexPath?)
+    func deleteTableCell(at indexPath: IndexPath)
 }
 
 class RootViewControllerManager {
@@ -92,6 +93,22 @@ class RootViewControllerManager {
                 linkCellConfigs[indexPath.row] = conf
                 delegate?.reloadTable(at: indexPath)
             }
+        }
+    }
+
+    func deleteUrlAction(indexPath: IndexPath) async {
+        let url = linkCellConfigs[indexPath.row].url
+        do {
+            guard try await apiManager.deleteMonitorUrl(link: url) else {
+                delegate?.showBanner(message: "Fail to delete url", backgroundColor: .systemPink)
+                return
+            }
+            await MainActor.run {
+                linkCellConfigs.remove(at: indexPath.row)
+                delegate?.deleteTableCell(at: indexPath)
+            }
+        } catch {
+            delegate?.showBanner(message: "Fail to delete url", backgroundColor: .systemPink)
         }
     }
 }

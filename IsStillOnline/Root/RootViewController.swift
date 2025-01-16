@@ -145,8 +145,27 @@ extension RootViewController: RootViewControllerManagerDelegate {
         }
     }
 
+    func deleteTableCell(at indexPath: IndexPath) {
+        tableView.deleteRows(at: [indexPath], with: .left)
+    }
+
     func showBanner(message: String, backgroundColor: UIColor) {
         addBanner(config: .init(message: message, backgroundColor: backgroundColor))
+    }
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, completionHandler in
+            Task { [weak self] in
+                await self?.manager.deleteUrlAction(indexPath: indexPath)
+                completionHandler(true)
+            }
+        }
+        deleteAction.backgroundColor = .red
+        deleteAction.image = UIImage(systemName: "trash")
+
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = true
+        return configuration
     }
 }
 
