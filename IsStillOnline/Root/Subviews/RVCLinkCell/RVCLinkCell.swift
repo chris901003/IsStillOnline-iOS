@@ -16,12 +16,19 @@ struct RVCLinkCellConfig {
     let updateTime: Date
 }
 
+protocol RVCLinkCellDelegate: AnyObject {
+    func refreshUrl(at indexPath: IndexPath)
+}
+
 class RVCLinkCell: UITableViewCell {
     let mainContentView = UIView()
     let statusCodeView = RVCLCStatusCodeView()
     let linkView = RVCLCLinkView()
     let statusView = RVCLCStatusLabelView()
     let updateLabel = UILabel()
+
+    var indexPath: IndexPath?
+    var delegate: RVCLinkCellDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -40,12 +47,21 @@ class RVCLinkCell: UITableViewCell {
         updateLabel.text = "Update: \(DateFormatterManager.shared.dateFormat(type: .MM_dd_HH_mm, date: config.updateTime))"
     }
 
+    @objc private func refreshAction() {
+        if let indexPath {
+            delegate?.refreshUrl(at: indexPath)
+        }
+    }
+
     private func setup() {
         selectionStyle = .none
 
         mainContentView.layer.cornerRadius = 15.0
         mainContentView.layer.borderColor = UIColor.black.cgColor
         mainContentView.layer.borderWidth = 1.5
+
+        statusCodeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(refreshAction)))
+        statusCodeView.isUserInteractionEnabled = true
 
         updateLabel.text = "Update: \(DateFormatterManager.shared.dateFormat(type: .MM_dd_HH_mm, date: Date.now))"
         updateLabel.textColor = .systemGray

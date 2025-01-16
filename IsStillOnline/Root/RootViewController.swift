@@ -50,6 +50,7 @@ class RootViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressAction)))
     }
 
     private func layout() {
@@ -112,6 +113,17 @@ extension RootViewController {
             newUrlInputView.alpha = 1
         }
     }
+
+    @objc private func longPressAction(_ gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else { return }
+        let location = gesture.location(in: tableView)
+        if let indexPath = tableView.indexPathForRow(at: location) {
+            let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+            feedbackGenerator.prepare()
+            feedbackGenerator.impactOccurred()
+            print("✅ Index: \(indexPath.row)")
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -125,13 +137,24 @@ extension RootViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         cell.configCell(config: manager.linkCellConfigs[indexPath.row])
+        cell.delegate = self
+        cell.indexPath = indexPath
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Task {
-            await manager.refreshUrlAction(indexPath: indexPath)
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, completionHandler in
+            Task { [weak self] in
+                await self?.manager.deleteUrlAction(indexPath: indexPath)
+                completionHandler(true)
+            }
         }
+        deleteAction.backgroundColor = .red
+        deleteAction.image = UIImage(systemName: "trash")
+
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = true
+        return configuration
     }
 }
 
@@ -152,20 +175,12 @@ extension RootViewController: RootViewControllerManagerDelegate {
     func showBanner(message: String, backgroundColor: UIColor) {
         addBanner(config: .init(message: message, backgroundColor: backgroundColor))
     }
+}
 
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, completionHandler in
-            Task { [weak self] in
-                await self?.manager.deleteUrlAction(indexPath: indexPath)
-                completionHandler(true)
-            }
-        }
-        deleteAction.backgroundColor = .red
-        deleteAction.image = UIImage(systemName: "trash")
-
-        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-        configuration.performsFirstActionWithFullSwipe = true
-        return configuration
+// MARK: - RVCLinkCellDelegate
+extension RootViewController: RVCLinkCellDelegate {
+    func refreshUrl(at indexPath: IndexPath) {
+        Task { await manager.refreshUrlAction(indexPath: indexPath) }
     }
 }
 
