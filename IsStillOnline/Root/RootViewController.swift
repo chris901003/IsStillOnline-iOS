@@ -121,7 +121,17 @@ extension RootViewController {
             let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
             feedbackGenerator.prepare()
             feedbackGenerator.impactOccurred()
-            print("✅ Index: \(indexPath.row)")
+
+            let bottomVC = RVCBottomViewController(config: manager.linkCellConfigs[indexPath.row])
+            if let sheetPresentationController =  bottomVC.sheetPresentationController {
+                sheetPresentationController.detents = [
+                    .custom(resolver: { context in
+                        context.maximumDetentValue * 0.3
+                    }),
+                    .medium()
+                ]
+            }
+            present(bottomVC, animated: true)
         }
     }
 }
