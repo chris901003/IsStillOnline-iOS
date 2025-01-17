@@ -13,12 +13,14 @@ protocol RootViewControllerManagerDelegate: AnyObject {
     func showBanner(message: String, backgroundColor: UIColor)
     func reloadTable(at indexPath: IndexPath?)
     func deleteTableCell(at indexPath: IndexPath)
+    func changeMonitorStatus(isStartMonitor: Bool)
 }
 
 class RootViewControllerManager {
     let apiManager = APIManager()
 
     var linkCellConfigs = [RVCLinkCellConfig]()
+    var isStartMonitor = false
 
     var delegate: RootViewControllerManagerDelegate? {
         didSet { delegate?.reloadTable(at: nil) }
@@ -29,6 +31,8 @@ class RootViewControllerManager {
             let urls = await fetchMonitorUrls()
             await checkAllUrlStatus(monitorUrls: urls)
             await MainActor.run { delegate?.reloadTable(at: nil) }
+            isStartMonitor = (try? await apiManager.isStartMonitor()) ?? false
+            await MainActor.run { delegate?.changeMonitorStatus(isStartMonitor: isStartMonitor) }
         }
     }
 
@@ -41,12 +45,14 @@ class RootViewControllerManager {
     }
 
     private func checkAllUrlStatus(monitorUrls: [URL]) async {
-        linkCellConfigs = await withTaskGroup(of: (URL, HTTPURLResponse)?.self, returning: [RVCLinkCellConfig].self) { group in
+        linkCellConfigs = await withTaskGroup(of: (URL, HTTPURLResponse?).self, returning: [RVCLinkCellConfig].self) { group in
             for url in monitorUrls {
                 group.addTask {
-                    guard let (_, response) = try? await URLSession.shared.data(from: url),
+                    var request = URLRequest(url: url)
+                    request.timeoutInterval = 1
+                    guard let (_, response) = try? await URLSession.shared.data(for: request),
                           let httpResponse = response as? HTTPURLResponse else {
-                        return nil
+                        return (url, nil)
                     }
                     return (url, httpResponse)
                 }
@@ -54,9 +60,12 @@ class RootViewControllerManager {
 
             var responses = [RVCLinkCellConfig]()
             for await data in group {
-                guard let data else { continue }
-                let isSuccess = 200 <= data.1.statusCode && data.1.statusCode <= 299
-                responses.append(.init(url: data.0.absoluteString, statusCode: "\(data.1.statusCode)", isSuccess: isSuccess, updateTime: Date.now))
+                if let res = data.1 {
+                    let isSuccess = 200 <= res.statusCode && res.statusCode <= 299
+                    responses.append(.init(url: data.0.absoluteString, statusCode: "\(res.statusCode)", isSuccess: isSuccess, updateTime: Date.now))
+                } else {
+                    responses.append(.init(url: data.0.absoluteString, statusCode: "408", isSuccess: false, updateTime: Date.now))
+                }
             }
             return responses
         }
@@ -109,6 +118,27 @@ class RootViewControllerManager {
             }
         } catch {
             delegate?.showBanner(message: "Fail to delete url", backgroundColor: .systemPink)
+        }
+    }
+
+    func changeMonitorStatus(to status: Bool) async -> Bool {
+        isStartMonitor = status
+        do {
+            let result = try await apiManager.changeMonitorStatus(to: status)
+            guard result else {
+                await MainActor.run {
+                    isStartMonitor = !status
+                    delegate?.showBanner(message: "Fail to \(status ? "start" : "stop") monitor", backgroundColor: .systemPink)
+                }
+                return false
+            }
+            return true
+        } catch {
+            await MainActor.run {
+                isStartMonitor = !status
+                delegate?.showBanner(message: "Fail to \(status ? "start" : "stop") monitor", backgroundColor: .systemPink)
+            }
+            return false
         }
     }
 }

@@ -33,6 +33,7 @@ extension RVCLCStatusLabelView {
         "403": "Forbidden",
         "404": "Not Found",
         "405": "Method Not Allowed",
+        "408": "Timeout",
         "429": "Too Many Requests",
 
         // 5xx Server Error

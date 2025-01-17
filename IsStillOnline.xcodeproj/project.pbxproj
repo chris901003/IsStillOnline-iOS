@@ -14,6 +14,7 @@
 		051792E42D3559070080AC2E /* RVCNewUrlInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792E32D3559070080AC2E /* RVCNewUrlInputView.swift */; };
 		051792E92D360CA60080AC2E /* PaddedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792E82D360CA60080AC2E /* PaddedTextField.swift */; };
 		054586AB2D38BA50008E15C3 /* RVCBottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054586AA2D38BA50008E15C3 /* RVCBottomViewController.swift */; };
+		054586AD2D394075008E15C3 /* RVCMonitorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054586AC2D394075008E15C3 /* RVCMonitorButton.swift */; };
 		054C8E632D369F9200D120C9 /* RootViewControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C8E622D369F9200D120C9 /* RootViewControllerManager.swift */; };
 		054C8E652D36A32400D120C9 /* EmptyResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C8E642D36A32400D120C9 /* EmptyResponseData.swift */; };
 		054C8E672D36AB9F00D120C9 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C8E662D36AB9F00D120C9 /* BannerView.swift */; };
@@ -21,6 +22,7 @@
 		054C8E6B2D375B7300D120C9 /* RVCLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C8E6A2D375B7300D120C9 /* RVCLinkCell.swift */; };
 		054C8E6F2D37616B00D120C9 /* RVCLCStatusCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C8E6E2D37616B00D120C9 /* RVCLCStatusCodeView.swift */; };
 		054C8E712D37682100D120C9 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C8E702D37682100D120C9 /* UIColor+Extension.swift */; };
+		055EE49F2D39F4D10033D242 /* MonitorStatusResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055EE49E2D39F4D10033D242 /* MonitorStatusResponseData.swift */; };
 		05BA093C2D37EC120096F4FE /* RVCLCLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BA093B2D37EC120096F4FE /* RVCLCLinkView.swift */; };
 		05BA093E2D37F1820096F4FE /* RVCLCStatusLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BA093D2D37F1820096F4FE /* RVCLCStatusLabelView.swift */; };
 		05BA09412D37F5400096F4FE /* DateFormatterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BA09402D37F5400096F4FE /* DateFormatterManager.swift */; };
@@ -48,6 +50,7 @@
 		051792E32D3559070080AC2E /* RVCNewUrlInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVCNewUrlInputView.swift; sourceTree = "<group>"; };
 		051792E82D360CA60080AC2E /* PaddedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedTextField.swift; sourceTree = "<group>"; };
 		054586AA2D38BA50008E15C3 /* RVCBottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVCBottomViewController.swift; sourceTree = "<group>"; };
+		054586AC2D394075008E15C3 /* RVCMonitorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVCMonitorButton.swift; sourceTree = "<group>"; };
 		054C8E622D369F9200D120C9 /* RootViewControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewControllerManager.swift; sourceTree = "<group>"; };
 		054C8E642D36A32400D120C9 /* EmptyResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponseData.swift; sourceTree = "<group>"; };
 		054C8E662D36AB9F00D120C9 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
@@ -55,6 +58,7 @@
 		054C8E6A2D375B7300D120C9 /* RVCLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVCLinkCell.swift; sourceTree = "<group>"; };
 		054C8E6E2D37616B00D120C9 /* RVCLCStatusCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVCLCStatusCodeView.swift; sourceTree = "<group>"; };
 		054C8E702D37682100D120C9 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		055EE49E2D39F4D10033D242 /* MonitorStatusResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorStatusResponseData.swift; sourceTree = "<group>"; };
 		05BA093B2D37EC120096F4FE /* RVCLCLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVCLCLinkView.swift; sourceTree = "<group>"; };
 		05BA093D2D37F1820096F4FE /* RVCLCStatusLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVCLCStatusLabelView.swift; sourceTree = "<group>"; };
 		05BA09402D37F5400096F4FE /* DateFormatterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterManager.swift; sourceTree = "<group>"; };
@@ -111,6 +115,7 @@
 				054C8E6C2D37614500D120C9 /* RVCLinkCell */,
 				051792E12D3556D20080AC2E /* RVCAddNewLinkView.swift */,
 				054586AA2D38BA50008E15C3 /* RVCBottomViewController.swift */,
+				054586AC2D394075008E15C3 /* RVCMonitorButton.swift */,
 				051792E32D3559070080AC2E /* RVCNewUrlInputView.swift */,
 			);
 			path = Subviews;
@@ -230,6 +235,7 @@
 				05E5DAEC2D314E670037F9A8 /* APIResponseData.swift */,
 				054C8E642D36A32400D120C9 /* EmptyResponseData.swift */,
 				05E5DAEA2D314CBF0037F9A8 /* LoginResponseData.swift */,
+				055EE49E2D39F4D10033D242 /* MonitorStatusResponseData.swift */,
 				05E5DAF72D340BE80037F9A8 /* MonitorUrlsResponseData.swift */,
 				05E5DAF52D3406310037F9A8 /* TokenResponseData.swift */,
 			);
@@ -337,6 +343,7 @@
 				05E5DAF22D3159580037F9A8 /* LoginManager.swift in Sources */,
 				05E5DAEB2D314CBF0037F9A8 /* LoginResponseData.swift in Sources */,
 				05E5DAE02D30CBE50037F9A8 /* LoginViewController.swift in Sources */,
+				055EE49F2D39F4D10033D242 /* MonitorStatusResponseData.swift in Sources */,
 				05E5DAF82D340BE80037F9A8 /* MonitorUrlsResponseData.swift in Sources */,
 				051792E92D360CA60080AC2E /* PaddedTextField.swift in Sources */,
 				051792E22D3556D20080AC2E /* RVCAddNewLinkView.swift in Sources */,
@@ -345,6 +352,7 @@
 				054C8E6F2D37616B00D120C9 /* RVCLCStatusCodeView.swift in Sources */,
 				05BA093E2D37F1820096F4FE /* RVCLCStatusLabelView.swift in Sources */,
 				054C8E6B2D375B7300D120C9 /* RVCLinkCell.swift in Sources */,
+				054586AD2D394075008E15C3 /* RVCMonitorButton.swift in Sources */,
 				051792E42D3559070080AC2E /* RVCNewUrlInputView.swift in Sources */,
 				051792DF2D354B6A0080AC2E /* RootViewController.swift in Sources */,
 				054C8E632D369F9200D120C9 /* RootViewControllerManager.swift in Sources */,

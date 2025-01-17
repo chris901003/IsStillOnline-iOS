@@ -17,6 +17,7 @@ class RootViewController: UIViewController {
     let newUrlInputView = RVCNewUrlInputView()
     let copyrightView = UILabel()
     let tableView = UITableView()
+    let monitorButton = RVCMonitorButton()
 
     let manager = RootViewControllerManager()
 
@@ -51,6 +52,8 @@ class RootViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressAction)))
+
+        monitorButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(monitorTapAction)))
     }
 
     private func layout() {
@@ -96,6 +99,13 @@ class RootViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: copyrightView.topAnchor, constant: -8)
         ])
 
+        view.addSubview(monitorButton)
+        monitorButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            monitorButton.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -4),
+            monitorButton.bottomAnchor.constraint(equalTo: copyrightView.topAnchor, constant: -12)
+        ])
+
         view.bringSubviewToFront(newUrlInputView)
     }
 
@@ -132,6 +142,16 @@ extension RootViewController {
                 ]
             }
             present(bottomVC, animated: true)
+        }
+    }
+
+    @objc private func monitorTapAction() {
+        monitorButton.config(isStart: !manager.isStartMonitor)
+        Task {
+            let res = await manager.changeMonitorStatus(to: !manager.isStartMonitor)
+            if !res {
+                await MainActor.run { monitorButton.config(isStart: manager.isStartMonitor) }
+            }
         }
     }
 }
@@ -184,6 +204,10 @@ extension RootViewController: RootViewControllerManagerDelegate {
 
     func showBanner(message: String, backgroundColor: UIColor) {
         addBanner(config: .init(message: message, backgroundColor: backgroundColor))
+    }
+
+    func changeMonitorStatus(isStartMonitor: Bool) {
+        monitorButton.config(isStart: isStartMonitor)
     }
 }
 

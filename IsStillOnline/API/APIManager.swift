@@ -10,8 +10,8 @@ import Foundation
 
 extension APIManager {
     enum Links {
-        case login, refreshToken, createNewMonitorUrl, deleteUrl
-        case createToken, monitorUrls
+        case login, refreshToken, createNewMonitorUrl, deleteUrl, startMonitor, stopMonitor
+        case createToken, monitorUrls, monitorStatus
 
         func getUrl() -> URL {
             switch self {
@@ -23,6 +23,10 @@ extension APIManager {
                     return URL(string: CREATE_URL)!
                 case .deleteUrl:
                     return URL(string: DELETE_URL)!
+                case .startMonitor:
+                    return URL(string: MONITOR_START)!
+                case .stopMonitor:
+                    return URL(string: MONITOR_STOP)!
                 default:
                     return URL(string: BASE_URL)!
             }
@@ -34,6 +38,8 @@ extension APIManager {
                     return URLComponents(string: CREATE_TOKEN_URL)!
                 case .monitorUrls:
                     return URLComponents(string: MONITOR_URLS)!
+                case .monitorStatus:
+                    return URLComponents(string: MONITOR_STATUS)!
                 default:
                     return URLComponents(string: BASE_URL)!
             }
@@ -128,7 +134,7 @@ class APIManager {
     }
 
     func getMonitorUrls() async throws -> MonitorResponse {
-        var urlComponents = Links.monitorUrls.getUrlComponent()
+        let urlComponents = Links.monitorUrls.getUrlComponent()
 
         guard let url = urlComponents.url else {
             throw APIError.url
@@ -168,6 +174,50 @@ class APIManager {
             return result.success
         } catch {
             throw APIError.urlSession
+        }
+    }
+
+    func isStartMonitor() async throws -> Bool {
+        let urlComponents = Links.monitorStatus.getUrlComponent()
+        guard let url = urlComponents.url else {
+            throw APIError.url
+        }
+        let request = Methods.get.getRequest(url: url)
+
+        do {
+            let result = try await sendRequestFlow(request: request, dataType: MonitorStatusResponse.self)
+            return result.data.status
+        } catch {
+            throw APIError.urlSession
+        }
+    }
+}
+
+// MARK: - Monitor Status
+extension APIManager {
+    func changeMonitorStatus(to status: Bool) async throws -> Bool {
+        if status {
+            return try await startMonitor()
+        } else {
+            return try await stopMonitor()
+        }
+    }
+
+    private func startMonitor() async throws -> Bool {
+        let url = Links.startMonitor.getUrl()
+        let request = Methods.get.getRequest(url: url)
+        do {
+            let result = try await sendRequestFlow(request: request, dataType: EmptyResponse.self)
+            return result.success
+        }
+    }
+
+    private func stopMonitor() async throws -> Bool {
+        let url = Links.stopMonitor.getUrl()
+        let request = Methods.get.getRequest(url: url)
+        do {
+            let result = try await sendRequestFlow(request: request, dataType: EmptyResponse.self)
+            return result.success
         }
     }
 }
