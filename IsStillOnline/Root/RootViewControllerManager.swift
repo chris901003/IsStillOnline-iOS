@@ -141,4 +141,10 @@ class RootViewControllerManager {
             return false
         }
     }
+
+    func logout() async -> Bool {
+        KeychainManager.deleteFromKeychain(key: KEYCHAIN_TOKEN)
+        KeychainManager.deleteFromKeychain(key: KEYCHAIN_USER_UID)
+        return await apiManager.deleteToken()
+    }
 }

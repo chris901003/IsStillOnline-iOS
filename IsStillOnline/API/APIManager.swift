@@ -10,7 +10,7 @@ import Foundation
 
 extension APIManager {
     enum Links {
-        case login, refreshToken, createNewMonitorUrl, deleteUrl, startMonitor, stopMonitor
+        case login, refreshToken, createNewMonitorUrl, deleteUrl, startMonitor, stopMonitor, deleteToken
         case createToken, monitorUrls, monitorStatus
 
         func getUrl() -> URL {
@@ -27,6 +27,8 @@ extension APIManager {
                     return URL(string: MONITOR_START)!
                 case .stopMonitor:
                     return URL(string: MONITOR_STOP)!
+                case .deleteToken:
+                    return URL(string: DELETE_TOKEN_URL)!
                 default:
                     return URL(string: BASE_URL)!
             }
@@ -130,6 +132,17 @@ class APIManager {
             return result
         } catch {
             throw APIError.urlSession
+        }
+    }
+
+    func deleteToken() async -> Bool {
+        let url = Links.deleteToken.getUrl()
+        let request = Methods.get.getRequest(url: url)
+        do {
+            let result = try await sendRequestFlow(request: request, dataType: EmptyResponse.self)
+            return result.success
+        } catch {
+            return false
         }
     }
 

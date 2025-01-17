@@ -13,11 +13,14 @@ class RootViewController: UIViewController {
     let cellId = "LinkCellId"
 
     let titleView = UILabel()
+    let logoutButton = RVCAddNewLinkView()
     let addNewLinkButton = RVCAddNewLinkView()
     let newUrlInputView = RVCNewUrlInputView()
     let copyrightView = UILabel()
     let tableView = UITableView()
     let monitorButton = RVCMonitorButton()
+    let fullCoverView = UIView()
+    let centerLoadingView = UIActivityIndicatorView()
 
     let manager = RootViewControllerManager()
 
@@ -35,6 +38,10 @@ class RootViewController: UIViewController {
         titleView.text = "Links"
         titleView.font = .systemFont(ofSize: 24, weight: .bold)
         titleView.textAlignment = .center
+
+        logoutButton.titleView.text = "Logout"
+        logoutButton.backgroundColor = .systemPink
+        logoutButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(logoutAction)))
 
         addNewLinkButton.isUserInteractionEnabled = true
         addNewLinkButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addUrlAction)))
@@ -54,6 +61,13 @@ class RootViewController: UIViewController {
         tableView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressAction)))
 
         monitorButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(monitorTapAction)))
+
+        fullCoverView.backgroundColor = .systemGray.withAlphaComponent(0.4)
+        fullCoverView.alpha = 0
+
+        centerLoadingView.style = .large
+        centerLoadingView.color = .black
+        centerLoadingView.alpha = 0
     }
 
     private func layout() {
@@ -66,6 +80,13 @@ class RootViewController: UIViewController {
             titleView.topAnchor.constraint(equalTo: layout.topAnchor),
             titleView.leadingAnchor.constraint(equalTo: layout.leadingAnchor),
             titleView.trailingAnchor.constraint(equalTo: layout.trailingAnchor)
+        ])
+
+        view.addSubview(logoutButton)
+        logoutButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            logoutButton.topAnchor.constraint(equalTo: layout.topAnchor),
+            logoutButton.leadingAnchor.constraint(equalTo: layout.leadingAnchor)
         ])
 
         view.addSubview(addNewLinkButton)
@@ -106,7 +127,24 @@ class RootViewController: UIViewController {
             monitorButton.bottomAnchor.constraint(equalTo: copyrightView.topAnchor, constant: -12)
         ])
 
+        view.addSubview(fullCoverView)
+        fullCoverView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            fullCoverView.topAnchor.constraint(equalTo: view.topAnchor),
+            fullCoverView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            fullCoverView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            fullCoverView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+
+        view.addSubview(centerLoadingView)
+        centerLoadingView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            centerLoadingView.centerXAnchor.constraint(equalTo: layout.centerXAnchor),
+            centerLoadingView.centerYAnchor.constraint(equalTo: layout.centerYAnchor)
+        ])
+
         view.bringSubviewToFront(newUrlInputView)
+        view.bringSubviewToFront(fullCoverView)
     }
 
     private func registerCell() {
@@ -151,6 +189,30 @@ extension RootViewController {
             let res = await manager.changeMonitorStatus(to: !manager.isStartMonitor)
             if !res {
                 await MainActor.run { monitorButton.config(isStart: manager.isStartMonitor) }
+            }
+        }
+    }
+
+    @objc private func logoutAction() {
+        centerLoadingView.startAnimating()
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self else { return }
+            fullCoverView.alpha = 1
+            centerLoadingView.alpha = 1
+        }
+        Task {
+            let result = await manager.logout()
+            if result {
+                let loginVC = LoginViewController()
+                loginVC.modalPresentationStyle = .fullScreen
+                present(loginVC, animated: true)
+            } else {
+                UIView.animate(withDuration: 0.25) { [weak self] in
+                    guard let self else { return }
+                    fullCoverView.alpha = 0
+                    centerLoadingView.alpha = 0
+                    showBanner(message: "Fail to logout", backgroundColor: .systemPink)
+                }
             }
         }
     }
