@@ -19,6 +19,8 @@ class RootViewController: UIViewController {
     let copyrightView = UILabel()
     let tableView = UITableView()
     let monitorButton = RVCMonitorButton()
+    let infoButtonView = RVCInfoButtonView()
+
     let fullCoverView = UIView()
     let centerLoadingView = UIActivityIndicatorView()
 
@@ -61,6 +63,8 @@ class RootViewController: UIViewController {
         tableView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressAction)))
 
         monitorButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(monitorTapAction)))
+
+        infoButtonView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapInfoAction)))
 
         fullCoverView.backgroundColor = .systemGray.withAlphaComponent(0.4)
         fullCoverView.alpha = 0
@@ -125,6 +129,13 @@ class RootViewController: UIViewController {
         NSLayoutConstraint.activate([
             monitorButton.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -4),
             monitorButton.bottomAnchor.constraint(equalTo: copyrightView.topAnchor, constant: -12)
+        ])
+
+        view.addSubview(infoButtonView)
+        infoButtonView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            infoButtonView.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: 4),
+            infoButtonView.bottomAnchor.constraint(equalTo: copyrightView.topAnchor, constant: -12)
         ])
 
         view.addSubview(fullCoverView)
@@ -215,6 +226,21 @@ extension RootViewController {
                 }
             }
         }
+    }
+
+    @objc private func tapInfoAction() {
+        let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+        feedbackGenerator.prepare()
+        feedbackGenerator.impactOccurred()
+        let infoVC = RVCDetailInfoViewController()
+        if let sheetPresentationController =  infoVC.sheetPresentationController {
+            sheetPresentationController.detents = [
+                .custom(resolver: { _ in
+                    infoVC.preferredContentSize.height
+                })
+            ]
+        }
+        present(infoVC, animated: true)
     }
 }
 
