@@ -32,6 +32,7 @@ class LoginManager {
 
     func createToken() async throws {
         try await apiManager.createToken()
+        try await apiManager.updateFirebaseToken()
     }
 }
 

@@ -10,7 +10,7 @@ import Foundation
 
 extension APIManager {
     enum Links {
-        case login, refreshToken, createNewMonitorUrl, deleteUrl, startMonitor, stopMonitor, deleteToken
+        case login, refreshToken, createNewMonitorUrl, deleteUrl, startMonitor, stopMonitor, deleteToken, updateFirebaseToken
         case createToken, monitorUrls, monitorStatus
 
         func getUrl() -> URL {
@@ -29,6 +29,8 @@ extension APIManager {
                     return URL(string: MONITOR_STOP)!
                 case .deleteToken:
                     return URL(string: DELETE_TOKEN_URL)!
+                case .updateFirebaseToken:
+                    return URL(string: UPDATE_FIREBASE_TOKEN)!
                 default:
                     return URL(string: BASE_URL)!
             }
@@ -89,7 +91,7 @@ extension APIManager {
 }
 
 class APIManager {
-    private func addJsonBody(request: URLRequest, data: [String: Any]) throws -> URLRequest {
+    func addJsonBody(request: URLRequest, data: [String: Any]) throws -> URLRequest {
         var request = request
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: data)

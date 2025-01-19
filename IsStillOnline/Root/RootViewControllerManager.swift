@@ -143,6 +143,8 @@ class RootViewControllerManager {
     }
 
     func logout() async -> Bool {
+        APIManager.firebaseToken = ""
+        _ = try? await apiManager.updateFirebaseToken()
         KeychainManager.deleteFromKeychain(key: KEYCHAIN_TOKEN)
         KeychainManager.deleteFromKeychain(key: KEYCHAIN_USER_UID)
         return await apiManager.deleteToken()

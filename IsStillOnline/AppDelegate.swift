@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("✅ FCM Token: \(fcmToken ?? "None")")
+        APIManager.firebaseToken = fcmToken
     }
 }
 

@@ -33,6 +33,7 @@
 		0560171D2D3A9D4F0098FEF7 /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 0560171C2D3A9D4F0098FEF7 /* FirebaseAppDistribution-Beta */; };
 		056017202D3A9D620098FEF7 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 0560171F2D3A9D620098FEF7 /* FirebaseMessaging */; };
 		056017222D3A9D9D0098FEF7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 056017212D3A9D9D0098FEF7 /* GoogleService-Info.plist */; };
+		056017242D3CA4390098FEF7 /* APIManager+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056017232D3CA4390098FEF7 /* APIManager+Message.swift */; };
 		05BA093C2D37EC120096F4FE /* RVCLCLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BA093B2D37EC120096F4FE /* RVCLCLinkView.swift */; };
 		05BA093E2D37F1820096F4FE /* RVCLCStatusLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BA093D2D37F1820096F4FE /* RVCLCStatusLabelView.swift */; };
 		05BA09412D37F5400096F4FE /* DateFormatterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BA09402D37F5400096F4FE /* DateFormatterManager.swift */; };
@@ -74,6 +75,7 @@
 		055EE4A42D3A88730033D242 /* LeadingIconLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadingIconLabelView.swift; sourceTree = "<group>"; };
 		056017122D3A9B270098FEF7 /* IsStillOnline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IsStillOnline.entitlements; sourceTree = "<group>"; };
 		056017212D3A9D9D0098FEF7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		056017232D3CA4390098FEF7 /* APIManager+Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIManager+Message.swift"; sourceTree = "<group>"; };
 		05BA093B2D37EC120096F4FE /* RVCLCLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVCLCLinkView.swift; sourceTree = "<group>"; };
 		05BA093D2D37F1820096F4FE /* RVCLCStatusLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVCLCStatusLabelView.swift; sourceTree = "<group>"; };
 		05BA09402D37F5400096F4FE /* DateFormatterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterManager.swift; sourceTree = "<group>"; };
@@ -191,9 +193,9 @@
 		05E5DABD2D30C7B00037F9A8 = {
 			isa = PBXGroup;
 			children = (
+				0560171E2D3A9D620098FEF7 /* Frameworks */,
 				05E5DAC82D30C7B00037F9A8 /* IsStillOnline */,
 				05E5DAC72D30C7B00037F9A8 /* Products */,
-				0560171E2D3A9D620098FEF7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -208,8 +210,6 @@
 		05E5DAC82D30C7B00037F9A8 /* IsStillOnline */ = {
 			isa = PBXGroup;
 			children = (
-				056017212D3A9D9D0098FEF7 /* GoogleService-Info.plist */,
-				056017122D3A9B270098FEF7 /* IsStillOnline.entitlements */,
 				05E5DAE62D3148540037F9A8 /* API */,
 				05E5DADD2D30CBC30037F9A8 /* Account */,
 				051792E72D360C980080AC2E /* Common */,
@@ -220,7 +220,9 @@
 				05BA093F2D37F5320096F4FE /* Utility */,
 				05E5DAC92D30C7B00037F9A8 /* AppDelegate.swift */,
 				05E5DAD22D30C7B10037F9A8 /* Assets.xcassets */,
+				056017212D3A9D9D0098FEF7 /* GoogleService-Info.plist */,
 				05E5DAD72D30C7B10037F9A8 /* Info.plist */,
+				056017122D3A9B270098FEF7 /* IsStillOnline.entitlements */,
 				05E5DACB2D30C7B00037F9A8 /* SceneDelegate.swift */,
 			);
 			path = IsStillOnline;
@@ -257,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				05E5DAE92D314CAD0037F9A8 /* Data */,
+				056017232D3CA4390098FEF7 /* APIManager+Message.swift */,
 				05E5DAF92D349B960037F9A8 /* APIManager+Token.swift */,
 				05E5DAE72D3148720037F9A8 /* APIManager.swift */,
 			);
@@ -375,6 +378,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				056017242D3CA4390098FEF7 /* APIManager+Message.swift in Sources */,
 				05E5DAFA2D349B960037F9A8 /* APIManager+Token.swift in Sources */,
 				05E5DAE82D3148720037F9A8 /* APIManager.swift in Sources */,
 				05E5DAED2D314E670037F9A8 /* APIResponseData.swift in Sources */,
