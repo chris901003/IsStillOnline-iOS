@@ -101,12 +101,11 @@ class APIManager {
         return request
     }
 
-    func loginWith(email: String, password: String) async throws -> LoginResponse {
+    @discardableResult
+    func loginWith(email: String, uid: String) async throws -> LoginResponse {
         let url = Links.login.getUrl()
         var request = Methods.post.getRequest(url: url)
-        let parameters: [String: Any] = [
-            "email": email, "password": password
-        ]
+        let parameters: [String: Any] = ["email": email, "uid": uid]
         request = try addJsonBody(request: request, data: parameters)
 
         do {

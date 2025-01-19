@@ -40,6 +40,8 @@ class LoginViewController: UIViewController {
     }
 
     private func setup() {
+        manager.delegate = self
+
         view.backgroundColor = .white
 
         titleView.text = "Account"
@@ -194,5 +196,14 @@ extension LoginViewController {
                 }
             }
         }
+    }
+}
+
+// MARK: - LoginManagerDelegate
+extension LoginViewController: LoginManagerDelegate {
+    func showRootView() {
+        let rootViewController = RootViewController()
+        rootViewController.modalPresentationStyle = .fullScreen
+        present(rootViewController, animated: true)
     }
 }

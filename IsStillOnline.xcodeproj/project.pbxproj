@@ -37,6 +37,7 @@
 		056017292D3CCF680098FEF7 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 056017282D3CCF680098FEF7 /* GoogleSignIn */; };
 		0560172B2D3CCF680098FEF7 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0560172A2D3CCF680098FEF7 /* GoogleSignInSwift */; };
 		0560172D2D3CD3D50098FEF7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0560172C2D3CD3D50098FEF7 /* FirebaseAuth */; };
+		0560172F2D3CF0710098FEF7 /* LoginViewController+Apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0560172E2D3CF0710098FEF7 /* LoginViewController+Apple.swift */; };
 		05BA093C2D37EC120096F4FE /* RVCLCLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BA093B2D37EC120096F4FE /* RVCLCLinkView.swift */; };
 		05BA093E2D37F1820096F4FE /* RVCLCStatusLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BA093D2D37F1820096F4FE /* RVCLCStatusLabelView.swift */; };
 		05BA09412D37F5400096F4FE /* DateFormatterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BA09402D37F5400096F4FE /* DateFormatterManager.swift */; };
@@ -79,6 +80,7 @@
 		056017122D3A9B270098FEF7 /* IsStillOnline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IsStillOnline.entitlements; sourceTree = "<group>"; };
 		056017232D3CA4390098FEF7 /* APIManager+Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIManager+Message.swift"; sourceTree = "<group>"; };
 		056017252D3CCF270098FEF7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0560172E2D3CF0710098FEF7 /* LoginViewController+Apple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginViewController+Apple.swift"; sourceTree = "<group>"; };
 		05BA093B2D37EC120096F4FE /* RVCLCLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVCLCLinkView.swift; sourceTree = "<group>"; };
 		05BA093D2D37F1820096F4FE /* RVCLCStatusLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RVCLCStatusLabelView.swift; sourceTree = "<group>"; };
 		05BA09402D37F5400096F4FE /* DateFormatterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterManager.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			children = (
 				05E5DAEE2D3151760037F9A8 /* Subviews */,
 				05E5DAF12D3159580037F9A8 /* LoginManager.swift */,
+				0560172E2D3CF0710098FEF7 /* LoginViewController+Apple.swift */,
 				05E5DADF2D30CBE50037F9A8 /* LoginViewController.swift */,
 			);
 			path = Login;
@@ -325,10 +328,10 @@
 				056017182D3A9D4F0098FEF7 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				0560171A2D3A9D4F0098FEF7 /* FirebaseAppCheck */,
 				0560171C2D3A9D4F0098FEF7 /* FirebaseAppDistribution-Beta */,
+				0560172C2D3CD3D50098FEF7 /* FirebaseAuth */,
 				0560171F2D3A9D620098FEF7 /* FirebaseMessaging */,
 				056017282D3CCF680098FEF7 /* GoogleSignIn */,
 				0560172A2D3CCF680098FEF7 /* GoogleSignInSwift */,
-				0560172C2D3CD3D50098FEF7 /* FirebaseAuth */,
 			);
 			productName = IsStillOnline;
 			productReference = 05E5DAC62D30C7B00037F9A8 /* IsStillOnline.app */;
@@ -359,8 +362,8 @@
 			);
 			mainGroup = 05E5DABD2D30C7B00037F9A8;
 			packageReferences = (
-				056017132D3A9D4F0098FEF7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				056017272D3CCF680098FEF7 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				056017132D3A9D4F0098FEF7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 05E5DAC72D30C7B00037F9A8 /* Products */;
 			projectDirPath = "";
@@ -403,6 +406,7 @@
 				05E5DAF02D3151B40037F9A8 /* LoginInputView.swift in Sources */,
 				05E5DAF22D3159580037F9A8 /* LoginManager.swift in Sources */,
 				05E5DAEB2D314CBF0037F9A8 /* LoginResponseData.swift in Sources */,
+				0560172F2D3CF0710098FEF7 /* LoginViewController+Apple.swift in Sources */,
 				05E5DAE02D30CBE50037F9A8 /* LoginViewController.swift in Sources */,
 				055EE49F2D39F4D10033D242 /* MonitorStatusResponseData.swift in Sources */,
 				05E5DAF82D340BE80037F9A8 /* MonitorUrlsResponseData.swift in Sources */,

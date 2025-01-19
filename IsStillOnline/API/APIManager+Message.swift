@@ -12,8 +12,8 @@ extension APIManager {
     static var firebaseToken: String?
 
     @discardableResult
-    func updateFirebaseToken() async throws -> Bool {
-        guard let token = APIManager.firebaseToken else { return false }
+    func updateFirebaseToken(token: String? = nil) async throws -> Bool {
+        guard let token = token ?? APIManager.firebaseToken else { return false }
         let url = Links.updateFirebaseToken.getUrl()
         var request = Methods.post.getRequest(url: url)
         let parameters: [String: Any] = ["fbToken": token]
