@@ -35,9 +35,15 @@ class LoginManager {
     }
 
     @discardableResult
-    func loginAction() async throws -> LoginResponse {
-//        try await apiManager.loginWith(email: email, password: password)
-        return .init(success: true, message: "", data: .init(email: "", uid: ""))
+    func loginAction() async -> Bool {
+        do {
+            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            await loginWithThirdParty(email: email, uid: result.user.uid)
+            return true
+        } catch {
+            print("✅ Error: \(error.localizedDescription)")
+            return false
+        }
     }
 
     func createToken() async throws {

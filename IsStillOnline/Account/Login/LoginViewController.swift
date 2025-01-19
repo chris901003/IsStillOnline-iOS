@@ -174,16 +174,8 @@ extension LoginViewController {
         }
 
         Task {
-            do {
-                try await manager.loginAction()
-                try await manager.createToken()
-
-                await MainActor.run {
-                    let rootViewController = RootViewController()
-                    rootViewController.modalPresentationStyle = .fullScreen
-                    present(rootViewController, animated: true)
-                }
-            } catch {
+            let result = await manager.loginAction()
+            if !result {
                 await MainActor.run {
                     UIView.animate(withDuration: 0.25) { [weak self] in
                         guard let self else { return }
