@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import GoogleSignIn
+import AuthenticationServices
 
 class LoginViewController: UIViewController {
     let mainContentView = UIView()
@@ -27,6 +29,8 @@ class LoginViewController: UIViewController {
     let loginButton = UILabel()
     let loginLoading = UIActivityIndicatorView()
     let loginErrorMessageView = UILabel()
+    let appleSignButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
+    let googleSignButton = GIDSignInButton()
 
     let manager = LoginManager()
 
@@ -60,6 +64,11 @@ class LoginViewController: UIViewController {
         loginErrorMessageView.textColor = .systemPink
         loginErrorMessageView.font = .systemFont(ofSize: 16, weight: .semibold)
         loginErrorMessageView.textAlignment = .center
+
+        googleSignButton.style = .wide
+        googleSignButton.addGestureRecognizer(UITapGestureRecognizer(target: manager, action: #selector(manager.loginWithGoogleAction)))
+
+        appleSignButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginWithAppleAction)))
     }
 
     private func layout() {
@@ -118,6 +127,23 @@ class LoginViewController: UIViewController {
             loginErrorMessageView.leadingAnchor.constraint(equalTo: layout.leadingAnchor),
             loginErrorMessageView.trailingAnchor.constraint(equalTo: layout.trailingAnchor),
             loginErrorMessageView.bottomAnchor.constraint(equalTo: layout.bottomAnchor)
+        ])
+
+        view.addSubview(appleSignButton)
+        appleSignButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            appleSignButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            appleSignButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            appleSignButton.topAnchor.constraint(equalTo: mainContentView.bottomAnchor, constant: 8),
+            appleSignButton.heightAnchor.constraint(equalToConstant: 45)
+        ])
+
+        view.addSubview(googleSignButton)
+        googleSignButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            googleSignButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            googleSignButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            googleSignButton.topAnchor.constraint(equalTo: appleSignButton.bottomAnchor, constant: 8)
         ])
     }
 }
