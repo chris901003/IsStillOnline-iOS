@@ -40,9 +40,10 @@ extension APIManager {
                 guard try await refreshAccessToken() else {
                     throw APIError.tokenExpired
                 }
-                var request = try addAccessToken(request: request)
+                let request = try addAccessToken(request: request)
                 return try await sendRequestFlow(request: request, dataType: dataType)
             } else if httpResponse.statusCode != 200 {
+                print("✅ Status code: \(httpResponse.statusCode)")
                 throw APIError.urlSession
             }
         }

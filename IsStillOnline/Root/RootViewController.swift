@@ -20,6 +20,7 @@ class RootViewController: UIViewController {
     let tableView = UITableView()
     let monitorButton = RVCMonitorButton()
     let infoButtonView = RVCInfoButtonView()
+    let deleteAccountButtonView = RVCInfoButtonView()
 
     let fullCoverView = UIView()
     let centerLoadingView = UIActivityIndicatorView()
@@ -65,6 +66,9 @@ class RootViewController: UIViewController {
         monitorButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(monitorTapAction)))
 
         infoButtonView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapInfoAction)))
+
+        deleteAccountButtonView.config(iconName: "trash", color: .systemPink)
+        deleteAccountButtonView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(deleteAccountAction)))
 
         fullCoverView.backgroundColor = .systemGray.withAlphaComponent(0.4)
         fullCoverView.alpha = 0
@@ -136,6 +140,13 @@ class RootViewController: UIViewController {
         NSLayoutConstraint.activate([
             infoButtonView.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: 4),
             infoButtonView.bottomAnchor.constraint(equalTo: copyrightView.topAnchor, constant: -12)
+        ])
+
+        view.addSubview(deleteAccountButtonView)
+        deleteAccountButtonView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            deleteAccountButtonView.bottomAnchor.constraint(equalTo: infoButtonView.topAnchor, constant: -8),
+            deleteAccountButtonView.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: 4)
         ])
 
         view.addSubview(fullCoverView)
@@ -241,6 +252,28 @@ extension RootViewController {
             ]
         }
         present(infoVC, animated: true)
+    }
+
+    @objc private func deleteAccountAction() {
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+            Task { [weak self] in
+                guard let self else { return }
+                let result = await manager.deleteAccount()
+                await MainActor.run { [weak self] in
+                    guard let self else { return }
+                    if result {
+                        let loginVC = LoginViewController()
+                        loginVC.modalPresentationStyle = .fullScreen
+                        present(loginVC, animated: true)
+                    }
+                }
+            }
+        }
+        let alert = UIAlertController(title: "Delete Account", message: "Are you sure to delete account?", preferredStyle: .alert)
+        alert.addAction(cancelAction)
+        alert.addAction(deleteAction)
+        present(alert, animated: true)
     }
 }
 

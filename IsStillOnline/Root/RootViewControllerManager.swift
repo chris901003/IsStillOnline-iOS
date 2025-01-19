@@ -150,4 +150,8 @@ class RootViewControllerManager {
         KeychainManager.deleteFromKeychain(key: KEYCHAIN_USER_UID)
         return await apiManager.deleteToken()
     }
+
+    func deleteAccount() async -> Bool {
+        await apiManager.deleteAccount()
+    }
 }

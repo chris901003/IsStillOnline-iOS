@@ -22,6 +22,11 @@ class RVCInfoButtonView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func config(iconName: String, color: UIColor) {
+        iconView.image = UIImage(systemName: iconName)?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        backgroundColor = color
+    }
+
     private func setup() {
         backgroundColor = .black
         layer.cornerRadius = 20.0
