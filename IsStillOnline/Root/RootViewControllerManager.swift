@@ -73,7 +73,9 @@ class RootViewControllerManager {
 
     private func checkSingleUrl(url: URL) async -> (RVCLinkCellConfig?, String?) {
         do {
-            let (_, response) = try await URLSession.shared.data(from: url)
+            var request = URLRequest(url: url)
+            request.timeoutInterval = 1
+            let (_, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse else {
                 return (nil, "Fail add url \(url)")
             }
