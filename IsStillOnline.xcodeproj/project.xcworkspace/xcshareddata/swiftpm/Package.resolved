@@ -143,6 +143,15 @@
         "revision" : "ebc7251dd5b37f627c93698e4374084d98409633",
         "version" : "1.28.2"
       }
+    },
+    {
+      "identity" : "xxooooxxioslibrary",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/chris901003/xxooooxxiOSLibrary",
+      "state" : {
+        "branch" : "main",
+        "revision" : "d86ac970dfb6aded9c5cc5c738e1f6acce40bbe0"
+      }
     }
   ],
   "version" : 2

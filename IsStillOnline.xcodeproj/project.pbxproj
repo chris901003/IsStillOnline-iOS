@@ -13,6 +13,8 @@
 		051792E22D3556D20080AC2E /* RVCAddNewLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792E12D3556D20080AC2E /* RVCAddNewLinkView.swift */; };
 		051792E42D3559070080AC2E /* RVCNewUrlInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792E32D3559070080AC2E /* RVCNewUrlInputView.swift */; };
 		051792E92D360CA60080AC2E /* PaddedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792E82D360CA60080AC2E /* PaddedTextField.swift */; };
+		0531E46C2D3E8E380039A258 /* xxooooxxCommonFunction in Frameworks */ = {isa = PBXBuildFile; productRef = 0531E46B2D3E8E380039A258 /* xxooooxxCommonFunction */; };
+		0531E46E2D3E8E380039A258 /* xxooooxxCommonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0531E46D2D3E8E380039A258 /* xxooooxxCommonUI */; };
 		054586AB2D38BA50008E15C3 /* RVCBottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054586AA2D38BA50008E15C3 /* RVCBottomViewController.swift */; };
 		054586AD2D394075008E15C3 /* RVCMonitorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054586AC2D394075008E15C3 /* RVCMonitorButton.swift */; };
 		054C8E632D369F9200D120C9 /* RootViewControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054C8E622D369F9200D120C9 /* RootViewControllerManager.swift */; };
@@ -112,10 +114,12 @@
 				056017152D3A9D4F0098FEF7 /* FirebaseAnalytics in Frameworks */,
 				0560172B2D3CCF680098FEF7 /* GoogleSignInSwift in Frameworks */,
 				0560172D2D3CD3D50098FEF7 /* FirebaseAuth in Frameworks */,
+				0531E46E2D3E8E380039A258 /* xxooooxxCommonUI in Frameworks */,
 				0560171D2D3A9D4F0098FEF7 /* FirebaseAppDistribution-Beta in Frameworks */,
 				056017192D3A9D4F0098FEF7 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				056017172D3A9D4F0098FEF7 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				056017292D3CCF680098FEF7 /* GoogleSignIn in Frameworks */,
+				0531E46C2D3E8E380039A258 /* xxooooxxCommonFunction in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +336,8 @@
 				0560171F2D3A9D620098FEF7 /* FirebaseMessaging */,
 				056017282D3CCF680098FEF7 /* GoogleSignIn */,
 				0560172A2D3CCF680098FEF7 /* GoogleSignInSwift */,
+				0531E46B2D3E8E380039A258 /* xxooooxxCommonFunction */,
+				0531E46D2D3E8E380039A258 /* xxooooxxCommonUI */,
 			);
 			productName = IsStillOnline;
 			productReference = 05E5DAC62D30C7B00037F9A8 /* IsStillOnline.app */;
@@ -364,6 +370,7 @@
 			packageReferences = (
 				056017272D3CCF680098FEF7 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				056017132D3A9D4F0098FEF7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				0531E46A2D3E8E380039A258 /* XCRemoteSwiftPackageReference "xxooooxxiOSLibrary" */,
 			);
 			productRefGroup = 05E5DAC72D30C7B00037F9A8 /* Products */;
 			projectDirPath = "";
@@ -651,6 +658,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0531E46A2D3E8E380039A258 /* XCRemoteSwiftPackageReference "xxooooxxiOSLibrary" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/chris901003/xxooooxxiOSLibrary";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		056017132D3A9D4F0098FEF7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -670,6 +685,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0531E46B2D3E8E380039A258 /* xxooooxxCommonFunction */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0531E46A2D3E8E380039A258 /* XCRemoteSwiftPackageReference "xxooooxxiOSLibrary" */;
+			productName = xxooooxxCommonFunction;
+		};
+		0531E46D2D3E8E380039A258 /* xxooooxxCommonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0531E46A2D3E8E380039A258 /* XCRemoteSwiftPackageReference "xxooooxxiOSLibrary" */;
+			productName = xxooooxxCommonUI;
+		};
 		056017142D3A9D4F0098FEF7 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 056017132D3A9D4F0098FEF7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
