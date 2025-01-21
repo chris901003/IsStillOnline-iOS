@@ -14,6 +14,7 @@ protocol RootViewControllerManagerDelegate: AnyObject {
     func reloadTable(at indexPath: IndexPath?)
     func deleteTableCell(at indexPath: IndexPath)
     func changeMonitorStatus(isStartMonitor: Bool)
+    func showQuickStart()
 }
 
 class RootViewControllerManager {
@@ -33,6 +34,15 @@ class RootViewControllerManager {
             await MainActor.run { delegate?.reloadTable(at: nil) }
             isStartMonitor = (try? await apiManager.isStartMonitor()) ?? false
             await MainActor.run { delegate?.changeMonitorStatus(isStartMonitor: isStartMonitor) }
+            await MainActor.run {
+                let userDefaults = UserDefaults.standard
+                let firstLanchKey = "isFirstLaunch"
+
+                if userDefaults.bool(forKey: firstLanchKey) == false {
+                    delegate?.showQuickStart()
+                    userDefaults.set(true, forKey: firstLanchKey)
+                }
+            }
         }
     }
 

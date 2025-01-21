@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		050830E42D3FDD23008C8831 /* OnboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = 050830E32D3FDD23008C8831 /* OnboardKit */; };
+		050830E62D3FE5AC008C8831 /* RootViewController+Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050830E52D3FE5AC008C8831 /* RootViewController+Onboarding.swift */; };
 		051792DA2D3547820080AC2E /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792D92D3547820080AC2E /* KeychainManager.swift */; };
 		051792DC2D354A7B0080AC2E /* ConstKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792DB2D354A7B0080AC2E /* ConstKeychain.swift */; };
 		051792DF2D354B6A0080AC2E /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051792DE2D354B6A0080AC2E /* RootViewController.swift */; };
@@ -60,6 +62,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		050830E52D3FE5AC008C8831 /* RootViewController+Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootViewController+Onboarding.swift"; sourceTree = "<group>"; };
 		051792D92D3547820080AC2E /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		051792DB2D354A7B0080AC2E /* ConstKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstKeychain.swift; sourceTree = "<group>"; };
 		051792DE2D354B6A0080AC2E /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +119,7 @@
 				0560172D2D3CD3D50098FEF7 /* FirebaseAuth in Frameworks */,
 				0531E46E2D3E8E380039A258 /* xxooooxxCommonUI in Frameworks */,
 				0560171D2D3A9D4F0098FEF7 /* FirebaseAppDistribution-Beta in Frameworks */,
+				050830E42D3FDD23008C8831 /* OnboardKit in Frameworks */,
 				056017192D3A9D4F0098FEF7 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				056017172D3A9D4F0098FEF7 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				056017292D3CCF680098FEF7 /* GoogleSignIn in Frameworks */,
@@ -138,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				051792E02D3556B90080AC2E /* Subviews */,
+				050830E52D3FE5AC008C8831 /* RootViewController+Onboarding.swift */,
 				051792DE2D354B6A0080AC2E /* RootViewController.swift */,
 				054C8E622D369F9200D120C9 /* RootViewControllerManager.swift */,
 			);
@@ -336,6 +341,7 @@
 				0560171F2D3A9D620098FEF7 /* FirebaseMessaging */,
 				056017282D3CCF680098FEF7 /* GoogleSignIn */,
 				0560172A2D3CCF680098FEF7 /* GoogleSignInSwift */,
+				050830E32D3FDD23008C8831 /* OnboardKit */,
 				0531E46B2D3E8E380039A258 /* xxooooxxCommonFunction */,
 				0531E46D2D3E8E380039A258 /* xxooooxxCommonUI */,
 			);
@@ -369,7 +375,9 @@
 			mainGroup = 05E5DABD2D30C7B00037F9A8;
 			packageReferences = (
 				056017272D3CCF680098FEF7 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				050830E22D3FDD23008C8831 /* XCRemoteSwiftPackageReference "OnboardKit" */,
 				056017132D3A9D4F0098FEF7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				050830DF2D3FD8FA008C8831 /* XCRemoteSwiftPackageReference "paper-onboarding" */,
 				0531E46A2D3E8E380039A258 /* XCRemoteSwiftPackageReference "xxooooxxiOSLibrary" */,
 			);
 			productRefGroup = 05E5DAC72D30C7B00037F9A8 /* Products */;
@@ -428,6 +436,7 @@
 				054C8E6B2D375B7300D120C9 /* RVCLinkCell.swift in Sources */,
 				054586AD2D394075008E15C3 /* RVCMonitorButton.swift in Sources */,
 				051792E42D3559070080AC2E /* RVCNewUrlInputView.swift in Sources */,
+				050830E62D3FE5AC008C8831 /* RootViewController+Onboarding.swift in Sources */,
 				051792DF2D354B6A0080AC2E /* RootViewController.swift in Sources */,
 				054C8E632D369F9200D120C9 /* RootViewControllerManager.swift in Sources */,
 				05E5DACC2D30C7B00037F9A8 /* SceneDelegate.swift in Sources */,
@@ -658,6 +667,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		050830DF2D3FD8FA008C8831 /* XCRemoteSwiftPackageReference "paper-onboarding" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Ramotion/paper-onboarding.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.1.5;
+			};
+		};
+		050830E22D3FDD23008C8831 /* XCRemoteSwiftPackageReference "OnboardKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NikolaKirev/OnboardKit";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		0531E46A2D3E8E380039A258 /* XCRemoteSwiftPackageReference "xxooooxxiOSLibrary" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/chris901003/xxooooxxiOSLibrary";
@@ -685,6 +710,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		050830E32D3FDD23008C8831 /* OnboardKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 050830E22D3FDD23008C8831 /* XCRemoteSwiftPackageReference "OnboardKit" */;
+			productName = OnboardKit;
+		};
 		0531E46B2D3E8E380039A258 /* xxooooxxCommonFunction */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0531E46A2D3E8E380039A258 /* XCRemoteSwiftPackageReference "xxooooxxiOSLibrary" */;
