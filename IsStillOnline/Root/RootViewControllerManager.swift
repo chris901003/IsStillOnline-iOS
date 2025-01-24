@@ -59,7 +59,7 @@ class RootViewControllerManager {
             for url in monitorUrls {
                 group.addTask {
                     var request = URLRequest(url: url)
-                    request.timeoutInterval = 1
+                    request.timeoutInterval = 3
                     guard let (_, response) = try? await URLSession.shared.data(for: request),
                           let httpResponse = response as? HTTPURLResponse else {
                         return (url, nil)
@@ -84,7 +84,7 @@ class RootViewControllerManager {
     private func checkSingleUrl(url: URL) async -> (RVCLinkCellConfig?, String?) {
         do {
             var request = URLRequest(url: url)
-            request.timeoutInterval = 1
+            request.timeoutInterval = 3
             let (_, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse else {
                 return (nil, "Fail add url \(url)")
